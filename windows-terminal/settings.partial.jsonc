@@ -1,0 +1,32 @@
+// Windows Terminal — manual reference fragment (the installer applies this for you).
+//
+// These are FRAGMENTS, not a complete settings.json. Merge them into your existing
+// %LOCALAPPDATA%\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
+// (back it up first, keep the JSON valid).
+
+{
+  // 1) Apply the font to every profile via defaults (so it doesn't matter which
+  //    PowerShell profile you open). Merge this "font" object into "profiles": { "defaults": { ... } }.
+  "profiles": {
+    "defaults": {
+      "font": {
+        "face": "LigaConsolas Nerd Font",
+        "features": {
+          "liga": 1,
+          "calt": 1
+        }
+      }
+    }
+  },
+
+  // 2) Free Ctrl+Left/Right (+Shift) so the keystrokes reach the shell for word
+  //    navigation. Add these objects to the existing "keybindings" array.
+  //    Use the current "id": null schema — NOT { "command": "unbound" }, which makes
+  //    Windows Terminal migrate-and-rewrite settings.json on every launch.
+  "keybindings": [
+    { "id": null, "keys": "ctrl+left" },
+    { "id": null, "keys": "ctrl+right" },
+    { "id": null, "keys": "ctrl+shift+left" },
+    { "id": null, "keys": "ctrl+shift+right" }
+  ]
+}
