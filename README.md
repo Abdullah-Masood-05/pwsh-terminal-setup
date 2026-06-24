@@ -6,18 +6,28 @@ It cuts shell startup from seconds to milliseconds by lazy-loading conda, instal
 **both ligatures and Nerd Font icons**, adds a clean zsh-like prompt, and configures PSReadLine for
 syntax highlighting, smart history, and proper word navigation — all from a single script.
 
-![pwsh-terminal-setup](assets/screenshots/hero.png)
-
 ## Preview
 
 <!-- Screenshots from Windows Terminal with LigaConsolas Nerd Font on a dark theme. -->
 
-| | |
-|---|---|
-| ![Prompt with git branch](assets/screenshots/prompt.png) | ![Syntax highlighting](assets/screenshots/syntax-highlighting.png) |
-| **Minimal prompt** — path, conda env, and git branch (with branch glyph). | **Syntax highlighting** — commands, parameters, strings, numbers, operators. |
-| ![History prediction](assets/screenshots/history-prediction.png) | ![Ligatures and icons](assets/screenshots/ligatures-icons.png) |
-| **History predictions** — past commands suggested as a ListView dropdown. | **Ligatures + Nerd icons** — `==>` `!=` `->` join; branch/folder glyphs render. |
+<table>
+  <tr>
+    <td width="50%"><img src="assets/screenshots/prompt.png" width="100%" alt="Prompt with git branch"></td>
+    <td width="50%"><img src="assets/screenshots/syntax-highlighting.png" width="100%" alt="Syntax highlighting"></td>
+  </tr>
+  <tr>
+    <td><b>Minimal prompt</b> — path, conda env, and git branch (with branch glyph).</td>
+    <td><b>Syntax highlighting</b> — commands, parameters, strings, numbers, operators.</td>
+  </tr>
+  <tr>
+    <td><img src="assets/screenshots/history-prediction.png" width="100%" alt="History prediction"></td>
+    <td><img src="assets/screenshots/ligatures-icons.png" width="100%" alt="Ligatures and icons"></td>
+  </tr>
+  <tr>
+    <td><b>History predictions</b> — past commands suggested as a ListView dropdown.</td>
+    <td><b>Ligatures + Nerd icons</b> — <code>==&gt;</code> <code>!=</code> <code>-&gt;</code> join; branch/folder glyphs render.</td>
+  </tr>
+</table>
 
 ## Features
 
