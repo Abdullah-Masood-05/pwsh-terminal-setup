@@ -6,6 +6,19 @@ It cuts shell startup from seconds to milliseconds by lazy-loading conda, instal
 **both ligatures and Nerd Font icons**, adds a clean zsh-like prompt, and configures PSReadLine for
 syntax highlighting, smart history, and proper word navigation — all from a single script.
 
+![pwsh-terminal-setup](assets/screenshots/hero.png)
+
+## Preview
+
+<!-- Screenshots from Windows Terminal with LigaConsolas Nerd Font on a dark theme. -->
+
+| | |
+|---|---|
+| ![Prompt with git branch](assets/screenshots/prompt.png) | ![Syntax highlighting](assets/screenshots/syntax-highlighting.png) |
+| **Minimal prompt** — path, conda env, and git branch (with branch glyph). | **Syntax highlighting** — commands, parameters, strings, numbers, operators. |
+| ![History prediction](assets/screenshots/history-prediction.png) | ![Ligatures and icons](assets/screenshots/ligatures-icons.png) |
+| **History predictions** — past commands suggested as a ListView dropdown. | **Ligatures + Nerd icons** — `==>` `!=` `->` join; branch/folder glyphs render. |
+
 ## Features
 
 - **⚡ Fast startup** — conda is loaded on first use instead of on every launch, taking startup from
