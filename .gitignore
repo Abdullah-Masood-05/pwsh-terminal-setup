@@ -1,3 +1,9 @@
 # Backups created by install.ps1
 *.bak
 *.tmp
+
+# Inno Setup installer script + build artifacts (kept local; the compiled
+# installer is published via GitHub Releases, not committed to the repo)
+*.iss
+build/
+Output/

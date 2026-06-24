@@ -24,7 +24,19 @@ syntax highlighting, smart history, and proper word navigation — all from a si
 - [PowerShell 7+](https://github.com/PowerShell/PowerShell) (`winget install --id Microsoft.PowerShell -e`)
 - [Windows Terminal](https://aka.ms/terminal) (`winget install --id Microsoft.WindowsTerminal -e`)
 
-## Quick start
+## Install
+
+### Option A — Installer (recommended)
+
+1. Download the latest **`pwsh-terminal-setup-x.y.z-Setup.exe`** from the
+   [Releases](https://github.com/Abdullah-Masood-05/pwsh-terminal-setup/releases) page.
+2. Run it. It installs per-user (no admin needed), **bundles the font so it works offline**, and
+   applies the whole setup.
+
+> The installer is unsigned, so Windows SmartScreen may warn on first launch — click **More info →
+> Run anyway**. PowerShell 7 must be installed first (the installer checks and tells you if not).
+
+### Option B — Script
 
 ```powershell
 git clone https://github.com/Abdullah-Masood-05/pwsh-terminal-setup.git

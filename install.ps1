@@ -33,7 +33,8 @@
 param(
     [switch] $SkipFont,
     [switch] $SkipTerminal,
-    [string] $FontFamily
+    [string] $FontFamily,
+    [string] $FontDir     # use pre-downloaded .ttf files from here instead of downloading (offline installer)
 )
 
 $ErrorActionPreference = 'Stop'
@@ -76,19 +77,26 @@ $detectedFamily = $FontFamily
 if (-not $SkipFont) {
     Write-Step "Installing LigaConsolas Nerd Font (per-user, no admin)"
     try {
-        $tmp = Join-Path $env:TEMP 'ligaconsolas-nf'
-        New-Item -ItemType Directory -Force -Path $tmp | Out-Null
-        $base  = 'https://github.com/Dosx001/ttf-ligaconsolas-nerd-font/raw/main'
         $files = 'LigaConsolas-NF-Regular.ttf','LigaConsolas-NF-Bold.ttf','LigaConsolas-NF-Italic.ttf','LigaConsolas-NF-Bold-Italic.ttf'
-        foreach ($f in $files) {
-            Invoke-WebRequest -Uri "$base/$f" -OutFile (Join-Path $tmp $f) -UseBasicParsing
+
+        # Use bundled fonts if -FontDir was supplied (offline installer); otherwise download them.
+        if ($FontDir -and (Test-Path (Join-Path $FontDir $files[0]))) {
+            $fontSrc = $FontDir
+            Write-Ok "Using bundled fonts from $FontDir"
+        } else {
+            $fontSrc = Join-Path $env:TEMP 'ligaconsolas-nf'
+            New-Item -ItemType Directory -Force -Path $fontSrc | Out-Null
+            $base = 'https://github.com/Dosx001/ttf-ligaconsolas-nerd-font/raw/main'
+            foreach ($f in $files) {
+                Invoke-WebRequest -Uri "$base/$f" -OutFile (Join-Path $fontSrc $f) -UseBasicParsing
+            }
+            Write-Ok "Downloaded 4 font files"
         }
-        Write-Ok "Downloaded 4 font files"
 
         # Read the family name via GDI+ (reliable; never hand-parse the TTF name table).
         Add-Type -AssemblyName System.Drawing
         $pfc = New-Object System.Drawing.Text.PrivateFontCollection
-        $pfc.AddFontFile((Join-Path $tmp 'LigaConsolas-NF-Regular.ttf'))
+        $pfc.AddFontFile((Join-Path $fontSrc $files[0]))
         $detectedFamily = $pfc.Families[0].Name
         $pfc.Dispose()
         Write-Ok "Font family: $detectedFamily"
@@ -105,7 +113,7 @@ if (-not $SkipFont) {
         }
         foreach ($file in $styleMap.Keys) {
             $dest = Join-Path $userFonts $file
-            Copy-Item (Join-Path $tmp $file) $dest -Force
+            Copy-Item (Join-Path $fontSrc $file) $dest -Force
             New-ItemProperty -Path $regKey -Name $styleMap[$file] -Value $dest -PropertyType String -Force | Out-Null
         }
 
