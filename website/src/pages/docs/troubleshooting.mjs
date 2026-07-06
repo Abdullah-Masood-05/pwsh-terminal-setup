@@ -1,4 +1,4 @@
-import { cmd, callout } from '../../lib/components.mjs'
+import { cmd, callout, extlink } from '../../lib/components.mjs'
 
 // Each entry: the exact error as an H3 in mono, cause in a sentence, fix as a
 // command block (design C2).
@@ -59,10 +59,21 @@ Add the unbinds from <a href="{{base}}docs/manual-setup/#terminal">step 4</a> an
 <code>.exe</code>, use the <a href="{{base}}docs/manual-setup/">manual setup</a> or run
 <code>install.ps1</code> from a clone instead.</p>
 
-<h3 id="pwsh-missing"><code>pwsh.exe not found on PATH</code></h3>
+<h3 id="pwsh-missing"><code>PowerShell 7 was not found</code></h3>
 <p class="steps-note">Cause: PowerShell 7 isn't installed — the setup targets it, not Windows PowerShell 5.1.</p>
-<p>Install it, then reopen your terminal and re-run:</p>
+<p>The script detects this itself and offers to install it via winget — answer <strong>y</strong> at the
+prompt (or pass <code>-Yes</code> to skip the prompt). It then switches to PowerShell 7 automatically and
+continues the rest of the setup. To install it yourself instead:</p>
 ${cmd('winget install --id Microsoft.PowerShell -e', { prompt: true, label: 'PowerShell' })}
+<p>If winget installed it but the script still doesn't see it, reopen your terminal and re-run
+<code>install.ps1</code> — a brand-new PATH entry doesn't reach a process that was already running.</p>
+
+<h3 id="winget-missing"><code>winget isn't available either</code></h3>
+<p class="steps-note">Cause: winget (App Installer) itself isn't present, so the setup can't install
+anything automatically.</p>
+<p>Install ${extlink('App Installer', 'https://apps.microsoft.com/detail/9nblggh4nns1')} from the
+Microsoft Store, or install PowerShell 7 / Windows Terminal manually from
+<a href="{{base}}docs/requirements/">Requirements</a>, then re-run <code>install.ps1</code>.</p>
 
 <p>Something else? Check the <a href="{{base}}docs/faq/">FAQ</a> or open an issue on
 <a href="https://github.com/Abdullah-Masood-05/pwsh-terminal-setup/issues" target="_blank" rel="noopener">GitHub ↗</a>.</p>
