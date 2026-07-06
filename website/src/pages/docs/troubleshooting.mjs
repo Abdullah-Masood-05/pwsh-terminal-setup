@@ -7,10 +7,19 @@ const runBypass = 'pwsh -ExecutionPolicy Bypass -File .\\install.ps1'
 const reload = '. $PROFILE.CurrentUserAllHosts'
 const checkFont = 'Write-Host "`u{e0a0}  `u{f07b}"     # should be a branch and a folder icon'
 const listProfile = 'Get-Content $PROFILE.CurrentUserAllHosts | Select-Object -First 5'
+const showLog = 'Get-Content "$env:TEMP\\pwsh-terminal-setup-install.log"'
 
 const body = `
 <h1>Troubleshooting</h1>
 <p class="lead">The common snags, each with the exact message you'll see and the command that fixes it.</p>
+
+${callout(
+  `Every run — script or installer — writes a full log to
+  <code>%TEMP%\\pwsh-terminal-setup-install.log</code>. If something didn't work and the console
+  closed before you could read it, start there:`,
+  'Tip'
+)}
+${cmd(showLog, { prompt: true, label: 'PowerShell' })}
 
 <h2 id="execution-policy">Execution policy</h2>
 <h3 id="policy-error"><code>...cannot be loaded because running scripts is disabled on this system</code></h3>

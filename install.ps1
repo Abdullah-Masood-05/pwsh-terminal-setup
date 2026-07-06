@@ -114,6 +114,11 @@ function Write-Step  ($m) { Write-Host "`n==> $m" -ForegroundColor Cyan }
 function Write-Ok    ($m) { Write-Host "    [ok] $m"   -ForegroundColor Green }
 function Write-Warn2 ($m) { Write-Host "    [!]  $m"   -ForegroundColor Yellow }
 
+# Always keep a log on disk — the console this runs in (e.g. from the .exe
+# installer) may close before there's time to read it.
+$logPath = Join-Path $env:TEMP 'pwsh-terminal-setup-install.log'
+try { Start-Transcript -Path $logPath -Append -ErrorAction Stop | Out-Null } catch { }
+
 Write-Host "pwsh-terminal-setup installer" -ForegroundColor Magenta
 
 # ---------------------------------------------------------------------
@@ -160,11 +165,15 @@ function Install-Prerequisite ($Name, $WingetId, [scriptblock] $Test) {
     }
 
     Write-Step "Installing $Name"
+    # Let winget resolve its own install scope — forcing --scope user can make it
+    # install a redundant duplicate alongside an existing machine-scope install
+    # instead of recognizing it as already present.
     winget install --id $WingetId -e --accept-package-agreements --accept-source-agreements
+    $wingetExit = $LASTEXITCODE
     Sync-PathFromRegistry
 
     if (& $Test) { Write-Ok "$Name installed"; return $true }
-    Write-Warn2 "$Name still isn't detected in this session. Reopen your terminal and re-run this script."
+    Write-Warn2 "$Name still isn't detected in this session (winget exit code: $wingetExit). Reopen your terminal and re-run this script."
     return $false
 }
 
@@ -193,6 +202,9 @@ if ($PSVersionTable.PSVersion.Major -lt 7 -and $hasPwsh -and -not $env:PWSH_TERM
         }
     }
     $env:PWSH_TERMINAL_SETUP_RELAUNCHED = '1'
+    # Release the log file before handing off — the child process appends to
+    # the same path, which would otherwise fail silently while we still hold it open.
+    try { Stop-Transcript | Out-Null } catch { }
     & pwsh -NoLogo -NoProfile -ExecutionPolicy Bypass -File $PSCommandPath @forward
     exit $LASTEXITCODE
 }
@@ -395,12 +407,20 @@ if (-not $SkipTerminal) {
 # 5. Verify
 # ---------------------------------------------------------------------
 Write-Step "Verifying"
-$ms = [math]::Round((Measure-Command { pwsh -Command "exit" }).TotalMilliseconds)
-Write-Ok "Cold startup: ${ms} ms"
-$condaType = (pwsh -Command "(Get-Command conda -ErrorAction SilentlyContinue).CommandType") 2>$null
-Write-Ok "conda resolves to: $([string]$condaType) (Function = lazy placeholder; loads on first use)"
+if (Get-Command pwsh.exe -ErrorAction SilentlyContinue) {
+    $ms = [math]::Round((Measure-Command { pwsh -Command "exit" }).TotalMilliseconds)
+    Write-Ok "Cold startup: ${ms} ms"
+    $condaType = (pwsh -Command "(Get-Command conda -ErrorAction SilentlyContinue).CommandType") 2>$null
+    Write-Ok "conda resolves to: $([string]$condaType) (Function = lazy placeholder; loads on first use)"
+} else {
+    Write-Warn2 "Skipping startup check — pwsh.exe still isn't available in this session. The rest of the setup (font, profile, Windows Terminal) is done; open pwsh once PowerShell 7 is installed."
+}
 
 Write-Host "`nDone." -ForegroundColor Magenta
 Write-Host "Restart Windows Terminal, open a new PowerShell tab, and test:" -ForegroundColor Magenta
 Write-Host '  Write-Host "Icons: `u{e0a0}  `u{f07b}   Ligatures: ==> -> != >= <=   Emoji: 🚀 ✅"'
 Write-Host "Then try Ctrl+Left / Ctrl+Right to jump word-by-word."
+Write-Host "`nLog saved to: $logPath" -ForegroundColor DarkGray
+
+try { Stop-Transcript | Out-Null } catch { }
+Start-Sleep -Seconds 4   # give a visible console a moment to be read before it closes
