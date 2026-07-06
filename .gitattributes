@@ -1,0 +1,5 @@
+# The documentation website (website/) is generated tooling for the docs
+# site, not part of this project's PowerShell + Windows Terminal codebase.
+# Mark it as documentation so it doesn't skew GitHub's Languages bar with
+# its JS/CSS.
+website/** linguist-documentation
