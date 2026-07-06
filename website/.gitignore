@@ -1,0 +1,9 @@
+# Build output (produced by build.mjs; deployed from CI)
+dist/
+
+# Local screenshot/scratch folder used during development
+_shots/
+
+node_modules/
+*.log
+.DS_Store
