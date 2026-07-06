@@ -10,17 +10,11 @@
     a specific machine or user.
 
     Steps:
-      0. Check prerequisites (PowerShell 7, Windows Terminal) — offers to
-         install anything missing via winget instead of just stopping
       1. Persist telemetry / update-check opt-out (User scope)
       2. Install LigaConsolas Nerd Font (per-user, no admin)
       3. Install the PowerShell profile ($PROFILE.CurrentUserAllHosts)
       4. Patch Windows Terminal settings.json (font + Ctrl+Arrow pass-through)
       5. Verify
-
-    If this script is started from Windows PowerShell 5.1 and PowerShell 7 is
-    missing, it offers to install PowerShell 7 via winget and then re-launches
-    itself under pwsh automatically, so the rest of the setup still runs on 7.
 
     Most settings can be customized from the command line — see the parameters
     below — so you can tune the font, colors, prompt, and prediction style
@@ -67,11 +61,6 @@
 .PARAMETER PredictionView
     PSReadLine prediction view style: ListView (default) or InlineView.
 
-.PARAMETER Yes
-    Don't prompt before installing a missing prerequisite (PowerShell 7 or
-    Windows Terminal) via winget — assume "yes" to every confirmation. Use
-    this for unattended runs.
-
 .EXAMPLE
     pwsh -ExecutionPolicy Bypass -File .\install.ps1
 
@@ -82,10 +71,6 @@
 .EXAMPLE
     # Install the prompt + editing config only, without touching conda or fonts:
     .\install.ps1 -SkipConda -SkipFont
-
-.EXAMPLE
-    # Unattended: auto-install any missing prerequisite, no prompts:
-    .\install.ps1 -Yes
 #>
 [CmdletBinding()]
 param(
@@ -102,9 +87,7 @@ param(
     [int]    $Opacity,
     [string] $PromptSymbol,
     [ValidateSet('ListView', 'InlineView')]
-    [string] $PredictionView,
-    [Alias('y')]
-    [switch] $Yes
+    [string] $PredictionView
 )
 
 $ErrorActionPreference = 'Stop'
@@ -114,103 +97,20 @@ function Write-Step  ($m) { Write-Host "`n==> $m" -ForegroundColor Cyan }
 function Write-Ok    ($m) { Write-Host "    [ok] $m"   -ForegroundColor Green }
 function Write-Warn2 ($m) { Write-Host "    [!]  $m"   -ForegroundColor Yellow }
 
-# Always keep a log on disk — the console this runs in (e.g. from the .exe
-# installer) may close before there's time to read it.
-$logPath = Join-Path $env:TEMP 'pwsh-terminal-setup-install.log'
-try { Start-Transcript -Path $logPath -Append -ErrorAction Stop | Out-Null } catch { }
-
 Write-Host "pwsh-terminal-setup installer" -ForegroundColor Magenta
 
 # ---------------------------------------------------------------------
-# 0. Prerequisite checks — offers to install anything missing via winget
-#    instead of just stopping and telling you to do it yourself.
+# 0. Prerequisite checks
 # ---------------------------------------------------------------------
 Write-Step "Checking prerequisites"
-
-$winget = Get-Command winget.exe -ErrorAction SilentlyContinue
-
-function Confirm-Action ($Message) {
-    if ($Yes) { return $true }
-    try {
-        $resp = Read-Host "$Message [Y/n]"
-    } catch {
-        # Non-interactive host (no console to prompt on) — don't hang, just skip.
-        Write-Warn2 "Non-interactive session — skipping. Re-run with -Yes to auto-confirm."
-        return $false
-    }
-    return ($resp -eq '' -or $resp -match '^(y|yes)$')
-}
-
-function Sync-PathFromRegistry {
-    # An installer that just ran (winget/MSI) updates PATH in the registry, but
-    # this process's $env:Path is a stale copy taken at process start — refresh it
-    # so a just-installed .exe can be found without opening a new terminal.
-    $machine = [Environment]::GetEnvironmentVariable('Path', 'Machine')
-    $user    = [Environment]::GetEnvironmentVariable('Path', 'User')
-    $env:Path = @($machine, $user) -join ';'
-}
-
-function Install-Prerequisite ($Name, $WingetId, [scriptblock] $Test) {
-    if (& $Test) { Write-Ok "$Name available"; return $true }
-
-    Write-Warn2 "$Name was not found."
-    if (-not $winget) {
-        Write-Warn2 "winget isn't available either, so this can't be installed automatically."
-        Write-Warn2 "Install $Name manually, then re-run this script."
-        return $false
-    }
-    if (-not (Confirm-Action "Install $Name now via winget?")) {
-        Write-Warn2 "Skipped. Install $Name manually (winget install --id $WingetId -e), then re-run this script."
-        return $false
-    }
-
-    Write-Step "Installing $Name"
-    # Let winget resolve its own install scope — forcing --scope user can make it
-    # install a redundant duplicate alongside an existing machine-scope install
-    # instead of recognizing it as already present.
-    winget install --id $WingetId -e --accept-package-agreements --accept-source-agreements
-    $wingetExit = $LASTEXITCODE
-    Sync-PathFromRegistry
-
-    if (& $Test) { Write-Ok "$Name installed"; return $true }
-    Write-Warn2 "$Name still isn't detected in this session (winget exit code: $wingetExit). Reopen your terminal and re-run this script."
-    return $false
-}
-
-$hasPwsh = Install-Prerequisite -Name 'PowerShell 7' -WingetId 'Microsoft.PowerShell' -Test {
-    [bool](Get-Command pwsh.exe -ErrorAction SilentlyContinue)
-}
-
-if (-not $SkipTerminal) {
-    Install-Prerequisite -Name 'Windows Terminal' -WingetId 'Microsoft.WindowsTerminal' -Test {
-        [bool]((Get-Command wt.exe -ErrorAction SilentlyContinue) -or
-               (Get-AppxPackage -Name 'Microsoft.WindowsTerminal*' -ErrorAction SilentlyContinue))
-    } | Out-Null
-}
-
-# If we're on Windows PowerShell 5.1 but pwsh is available (it already was, or
-# we just installed it above), hand off so the rest of the setup runs on 7.
-if ($PSVersionTable.PSVersion.Major -lt 7 -and $hasPwsh -and -not $env:PWSH_TERMINAL_SETUP_RELAUNCHED) {
-    Write-Step "Switching to PowerShell 7"
-    $forward = @()
-    foreach ($key in $PSBoundParameters.Keys) {
-        $val = $PSBoundParameters[$key]
-        if ($val -is [switch] -or $val -is [bool]) {
-            if ([bool]$val) { $forward += "-$key" }
-        } else {
-            $forward += "-$key"; $forward += [string]$val
-        }
-    }
-    $env:PWSH_TERMINAL_SETUP_RELAUNCHED = '1'
-    # Release the log file before handing off — the child process appends to
-    # the same path, which would otherwise fail silently while we still hold it open.
-    try { Stop-Transcript | Out-Null } catch { }
-    & pwsh -NoLogo -NoProfile -ExecutionPolicy Bypass -File $PSCommandPath @forward
-    exit $LASTEXITCODE
-}
-
 if ($PSVersionTable.PSVersion.Major -lt 7) {
-    Write-Warn2 "Continuing on Windows PowerShell $($PSVersionTable.PSVersion) — PowerShell 7 wasn't installed, so some steps may not apply correctly."
+    Write-Warn2 "You're running Windows PowerShell $($PSVersionTable.PSVersion). This setup targets PowerShell 7+."
+    Write-Warn2 "Install it with:  winget install --id Microsoft.PowerShell -e   then re-run this in 'pwsh'."
+}
+if (-not (Get-Command pwsh.exe -ErrorAction SilentlyContinue)) {
+    Write-Warn2 "pwsh.exe not found on PATH. Install PowerShell 7:  winget install --id Microsoft.PowerShell -e"
+} else {
+    Write-Ok "PowerShell 7 available"
 }
 
 # ---------------------------------------------------------------------
@@ -353,7 +253,7 @@ if (-not $SkipTerminal) {
     ) | Where-Object { Test-Path $_ } | Select-Object -First 1
 
     if (-not $wt) {
-        Write-Warn2 "Windows Terminal settings.json not found. It's created the first time Windows Terminal runs — launch it once, then re-run this script. Re-running is safe: the font and profile steps just redo idempotently."
+        Write-Warn2 "Windows Terminal settings.json not found. Launch Windows Terminal once, then re-run with -SkipFont."
     } else {
         try {
             Copy-Item $wt "$wt.bak" -Force
@@ -407,20 +307,12 @@ if (-not $SkipTerminal) {
 # 5. Verify
 # ---------------------------------------------------------------------
 Write-Step "Verifying"
-if (Get-Command pwsh.exe -ErrorAction SilentlyContinue) {
-    $ms = [math]::Round((Measure-Command { pwsh -Command "exit" }).TotalMilliseconds)
-    Write-Ok "Cold startup: ${ms} ms"
-    $condaType = (pwsh -Command "(Get-Command conda -ErrorAction SilentlyContinue).CommandType") 2>$null
-    Write-Ok "conda resolves to: $([string]$condaType) (Function = lazy placeholder; loads on first use)"
-} else {
-    Write-Warn2 "Skipping startup check — pwsh.exe still isn't available in this session. The rest of the setup (font, profile, Windows Terminal) is done; open pwsh once PowerShell 7 is installed."
-}
+$ms = [math]::Round((Measure-Command { pwsh -Command "exit" }).TotalMilliseconds)
+Write-Ok "Cold startup: ${ms} ms"
+$condaType = (pwsh -Command "(Get-Command conda -ErrorAction SilentlyContinue).CommandType") 2>$null
+Write-Ok "conda resolves to: $([string]$condaType) (Function = lazy placeholder; loads on first use)"
 
 Write-Host "`nDone." -ForegroundColor Magenta
 Write-Host "Restart Windows Terminal, open a new PowerShell tab, and test:" -ForegroundColor Magenta
 Write-Host '  Write-Host "Icons: `u{e0a0}  `u{f07b}   Ligatures: ==> -> != >= <=   Emoji: 🚀 ✅"'
 Write-Host "Then try Ctrl+Left / Ctrl+Right to jump word-by-word."
-Write-Host "`nLog saved to: $logPath" -ForegroundColor DarkGray
-
-try { Stop-Transcript | Out-Null } catch { }
-Start-Sleep -Seconds 4   # give a visible console a moment to be read before it closes

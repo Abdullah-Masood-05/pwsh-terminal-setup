@@ -14,15 +14,8 @@ ${h2('Installing', 'installing')}
 profile and Windows Terminal settings live in your own user profile. No elevation, no system changes.</p>
 
 <h3>Does it work with Windows PowerShell 5.1?</h3>
-<p>It targets PowerShell 7 (<code>pwsh</code>), which installs side-by-side with the built-in 5.1 and
-doesn't replace it. You can start the setup from 5.1 — if PowerShell 7 isn't installed yet, the script
-offers to install it via winget and then switches to it automatically to finish the rest of the setup.</p>
-
-<h3>What if I don't have PowerShell 7 or Windows Terminal installed?</h3>
-<p>The setup checks for both and offers to install whichever is missing via winget instead of stopping —
-answer <strong>y</strong> when asked, or pass <code>-Yes</code> to skip the prompts entirely. See
-<a href="{{base}}docs/requirements/">Requirements</a> for why each one is needed, and
-<a href="{{base}}docs/troubleshooting/#winget-missing">Troubleshooting</a> if winget itself isn't available.</p>
+<p>It targets PowerShell 7 (<code>pwsh</code>). PowerShell 7 installs side-by-side with the built-in 5.1
+and doesn't replace it. Install 7 first — see <a href="{{base}}docs/requirements/">Requirements</a>.</p>
 
 <h3>Can I install without an internet connection?</h3>
 <p>Yes. The <code>.exe</code> installer bundles the font, so it works offline as-is. For the script, download

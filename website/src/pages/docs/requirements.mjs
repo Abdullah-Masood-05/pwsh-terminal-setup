@@ -5,14 +5,6 @@ const body = `
 <h1>Requirements</h1>
 <p class="lead">Three things, all free: Windows 10 or 11, PowerShell 7, and Windows Terminal.</p>
 
-${callout(
-  `You don't have to install these yourself first. If PowerShell 7 or Windows Terminal are
-  missing, <code>install.ps1</code> detects it and offers to install them via winget before
-  continuing — see <a href="{{base}}docs/install-installer/">Install with the installer</a>. The
-  steps below are for installing them manually, or in advance.`,
-  'Note'
-)}
-
 ${table(
   ['Requirement', 'Why', 'Get it'],
   [
@@ -29,9 +21,8 @@ ${extlink('download it from Microsoft', links.powershell)} directly.</p>
 ${cmd('winget install --id Microsoft.PowerShell -e', { prompt: true, label: 'PowerShell' })}
 
 ${callout(
-  `PowerShell 7 runs as <code>pwsh</code>, not <code>powershell</code>. If <code>install.ps1</code>
-  can't find <code>pwsh.exe</code>, it offers to run this command for you — answer <strong>y</strong>
-  at the prompt, or pass <code>-Yes</code> to skip the prompt entirely.`,
+  `PowerShell 7 runs as <code>pwsh</code>, not <code>powershell</code>. If the installer says it can't
+  find <code>pwsh.exe</code>, install this first and reopen your terminal.`,
   'Important'
 )}
 

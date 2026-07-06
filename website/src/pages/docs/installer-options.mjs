@@ -5,7 +5,6 @@ const exCustom =
   '.\\install.ps1 -FontSize 12 -ColorScheme "One Half Dark" -PromptSymbol "➜" -PredictionView InlineView'
 const exMinimal = '.\\install.ps1 -SkipConda -SkipFont'
 const exOffline = '.\\install.ps1 -FontDir "C:\\fonts\\LigaConsolas-NF"'
-const exUnattended = '.\\install.ps1 -Yes'
 const exHelp = 'Get-Help .\\install.ps1 -Detailed'
 
 const body = `
@@ -39,7 +38,6 @@ ${table(
     ['<code>-SkipTerminal</code>', 'switch', 'Do not patch Windows Terminal <code>settings.json</code>.'],
     ['<code>-SkipProfile</code>', 'switch', 'Do not install the PowerShell profile.'],
     ['<code>-SkipConda</code>', 'switch', 'Omit the conda lazy-init block from the profile.'],
-    ['<code>-Yes</code>', 'switch', 'Don’t prompt before installing a missing prerequisite via winget.'],
   ]
 )}
 
@@ -49,14 +47,6 @@ ${callout(
   new schemes.`,
   'Note'
 )}
-
-${h2('Unattended runs', 'unattended')}
-<p>If PowerShell 7 or Windows Terminal are missing, the script normally stops to ask before installing
-them via winget. Pass <code>-Yes</code> to auto-confirm any of those prompts — useful for scripted or
-unattended runs:</p>
-${cmd(exUnattended, { prompt: true, label: 'PowerShell' })}
-<p>Everything else about the run is unaffected — <code>-Yes</code> only answers the prerequisite
-prompts, not anything else.</p>
 
 ${h2('Offline install', 'offline')}
 <p>On a machine with no internet, download the four <code>.ttf</code> files elsewhere (see
@@ -77,6 +67,6 @@ export default {
   section: 'docs',
   title: 'Installer options',
   description:
-    'Every install.ps1 parameter: font size, color scheme, opacity, prompt symbol, prediction view, the skip switches, and -Yes for unattended prerequisite installs.',
+    'Every install.ps1 parameter: font size, color scheme, opacity, prompt symbol, prediction view, and the skip switches.',
   body,
 }

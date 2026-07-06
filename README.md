@@ -85,8 +85,7 @@ installer with the font included.
    applies the whole setup.
 
 > The installer is unsigned, so Windows SmartScreen may warn on first launch — click **More info →
-> Run anyway**. If PowerShell 7 or Windows Terminal aren't installed yet, the script offers to
-> install them via winget instead of just stopping.
+> Run anyway**. PowerShell 7 must be installed first (the installer checks and tells you if not).
 
 ### Option B — Script
 
@@ -127,7 +126,6 @@ in one run:
 | `-PredictionView <ListView\|InlineView>` | PSReadLine prediction style |
 | `-FontFamily <name>` | Font family used in Windows Terminal |
 | `-SkipFont` / `-SkipTerminal` / `-SkipProfile` / `-SkipConda` | Skip a step |
-| `-Yes` | Don't prompt before installing a missing prerequisite via winget |
 
 See the full **[installer options reference](https://abdullah-masood-05.github.io/pwsh-terminal-setup/docs/installer-options/)** in the docs.
 
