@@ -3,6 +3,9 @@
 export const repoUrl = 'https://github.com/Abdullah-Masood-05/pwsh-terminal-setup'
 export const releasesUrl = `${repoUrl}/releases`
 export const siteName = 'pwsh-terminal-setup'
+// Canonical public URL (GitHub Pages). Used for absolute og:image / og:url,
+// which social/link-preview scrapers require (relative paths don't work).
+export const siteUrl = 'https://abdullah-masood-05.github.io/pwsh-terminal-setup'
 
 // External links referenced across pages.
 export const links = {

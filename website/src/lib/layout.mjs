@@ -1,6 +1,6 @@
 // layout.mjs — page shells. `shell` is the base (nav + footer); `docsShell`
 // wraps content in the docs chrome (sidebar + TOC rail + prev/next).
-import { topNav, docsNav, docsOrder, routeTitle, repoUrl, links } from './nav.mjs'
+import { topNav, docsNav, docsOrder, routeTitle, repoUrl, links, siteUrl } from './nav.mjs'
 import { esc, extractToc } from './components.mjs'
 
 const FONTS =
@@ -13,6 +13,9 @@ const THEME_ICONS =
 
 function head({ title, description, route }) {
   const full = route === '' ? `${title}` : `${esc(title)} · pwsh-terminal-setup`
+  const desc = esc(description || '')
+  const pageUrl = route === '' ? `${siteUrl}/` : `${siteUrl}/${route}/`
+  const ogImage = `${siteUrl}/assets/og-image.png`
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -20,12 +23,23 @@ function head({ title, description, route }) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>(function(){try{var t=localStorage.getItem('theme');document.documentElement.setAttribute('data-theme',(t==='light'||t==='dark')?t:'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
 <title>${full}</title>
-<meta name="description" content="${esc(description || '')}">
+<meta name="description" content="${desc}">
 <meta name="color-scheme" content="dark light">
+<link rel="canonical" href="${pageUrl}">
 <link rel="icon" href="{{base}}assets/favicon.ico" sizes="any">
-<meta property="og:title" content="${esc(title)}">
-<meta property="og:description" content="${esc(description || '')}">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="pwsh-terminal-setup">
+<meta property="og:title" content="${esc(title)}">
+<meta property="og:description" content="${desc}">
+<meta property="og:url" content="${pageUrl}">
+<meta property="og:image" content="${ogImage}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="pwsh-terminal-setup — a PowerShell 7 prompt with a git-aware terminal demo.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${esc(title)}">
+<meta name="twitter:description" content="${desc}">
+<meta name="twitter:image" content="${ogImage}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="${FONTS}">
