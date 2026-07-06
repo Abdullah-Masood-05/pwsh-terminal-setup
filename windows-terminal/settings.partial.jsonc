@@ -15,7 +15,13 @@
           "liga": 1,
           "calt": 1
         }
+        // "size": 12          // optional — the installer sets this from -FontSize
       }
+      // Optional look-and-feel. The installer writes these from -ColorScheme /
+      // -Opacity; add them by hand here if you're configuring manually.
+      // "colorScheme": "One Half Dark",
+      // "opacity": 90,
+      // "useAcrylic": true
     }
   },
 

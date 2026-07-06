@@ -16,25 +16,78 @@
       4. Patch Windows Terminal settings.json (font + Ctrl+Arrow pass-through)
       5. Verify
 
+    Most settings can be customized from the command line — see the parameters
+    below — so you can tune the font, colors, prompt, and prediction style
+    without hand-editing any file first.
+
 .PARAMETER SkipFont
     Skip downloading/installing the font.
 
 .PARAMETER SkipTerminal
     Skip patching Windows Terminal settings.json.
 
+.PARAMETER SkipProfile
+    Skip installing the PowerShell profile.
+
+.PARAMETER SkipConda
+    Omit the conda lazy-init block from the installed profile (use this if you
+    don't use conda). Re-running without the switch restores it.
+
 .PARAMETER FontFamily
     Override the font family name used in Windows Terminal (default is read
     from the installed font via .NET).
 
+.PARAMETER FontDir
+    Use pre-downloaded .ttf files from this directory instead of downloading
+    them (offline installer).
+
+.PARAMETER FontSize
+    Font size (points) for Windows Terminal profiles.defaults. Leaves the
+    existing size untouched when not supplied.
+
+.PARAMETER ColorScheme
+    Windows Terminal color scheme applied to profiles.defaults, e.g.
+    'One Half Dark' or 'Tokyo Night'. The scheme must already exist in
+    settings.json.
+
+.PARAMETER Opacity
+    Windows Terminal background opacity (0-100) for profiles.defaults. Values
+    below 100 also enable acrylic. Leaves opacity untouched when not supplied.
+
+.PARAMETER PromptSymbol
+    Character used for the prompt symbol in the profile (default is the zsh-like
+    '❯').
+
+.PARAMETER PredictionView
+    PSReadLine prediction view style: ListView (default) or InlineView.
+
 .EXAMPLE
     pwsh -ExecutionPolicy Bypass -File .\install.ps1
+
+.EXAMPLE
+    # Customize the terminal settings in one run:
+    .\install.ps1 -FontSize 12 -ColorScheme 'One Half Dark' -PromptSymbol '➜' -PredictionView InlineView
+
+.EXAMPLE
+    # Install the prompt + editing config only, without touching conda or fonts:
+    .\install.ps1 -SkipConda -SkipFont
 #>
 [CmdletBinding()]
 param(
     [switch] $SkipFont,
     [switch] $SkipTerminal,
+    [switch] $SkipProfile,
+    [switch] $SkipConda,
     [string] $FontFamily,
-    [string] $FontDir     # use pre-downloaded .ttf files from here instead of downloading (offline installer)
+    [string] $FontDir,          # use pre-downloaded .ttf files from here instead of downloading (offline installer)
+    [ValidateRange(1, 72)]
+    [double] $FontSize,
+    [string] $ColorScheme,
+    [ValidateRange(0, 100)]
+    [int]    $Opacity,
+    [string] $PromptSymbol,
+    [ValidateSet('ListView', 'InlineView')]
+    [string] $PredictionView
 )
 
 $ErrorActionPreference = 'Stop'
@@ -141,30 +194,52 @@ if (-not $detectedFamily) { $detectedFamily = 'LigaConsolas Nerd Font' }
 # ---------------------------------------------------------------------
 # 3. PowerShell profile -> $PROFILE.CurrentUserAllHosts (idempotent)
 # ---------------------------------------------------------------------
-Write-Step "Installing PowerShell profile"
-$src = Join-Path $root 'profile.ps1'
-if (-not (Test-Path $src)) { throw "profile.ps1 not found next to install.ps1 ($src)" }
+if (-not $SkipProfile) {
+    Write-Step "Installing PowerShell profile"
+    $src = Join-Path $root 'profile.ps1'
+    if (-not (Test-Path $src)) { throw "profile.ps1 not found next to install.ps1 ($src)" }
 
-$profilePath = $PROFILE.CurrentUserAllHosts
-New-Item -ItemType Directory -Force -Path (Split-Path $profilePath) | Out-Null
-if (Test-Path $profilePath) {
-    Copy-Item $profilePath "$profilePath.bak" -Force
-    Write-Ok "Backed up existing profile -> $(Split-Path $profilePath -Leaf).bak"
+    $profilePath = $PROFILE.CurrentUserAllHosts
+    New-Item -ItemType Directory -Force -Path (Split-Path $profilePath) | Out-Null
+    if (Test-Path $profilePath) {
+        Copy-Item $profilePath "$profilePath.bak" -Force
+        Write-Ok "Backed up existing profile -> $(Split-Path $profilePath -Leaf).bak"
+    }
+
+    $existing = if (Test-Path $profilePath) { Get-Content $profilePath -Raw } else { '' }
+    # Strip our managed regions so re-running never duplicates them.
+    foreach ($marker in 'startup-env','conda lazy-init','prompt','PSReadLine') {
+        $existing = [regex]::Replace($existing, "(?s)#region $([regex]::Escape($marker)).*?#endregion\s*", '')
+    }
+    $existing = $existing.TrimEnd()
+    $ours = (Get-Content $src -Raw).TrimEnd()
+
+    # --- apply command-line customizations to our block before merging ---
+    if ($SkipConda) {
+        # Drop the whole conda lazy-init region for users who don't use conda.
+        $ours = [regex]::Replace($ours, "(?s)#region conda lazy-init.*?#endregion\r?\n?", '').TrimEnd()
+        Write-Ok "conda lazy-init block omitted (-SkipConda)"
+    }
+    if ($PromptSymbol) {
+        # Replace the default prompt glyph ([char]0x276F) with the requested one.
+        $ours = $ours.Replace('$sym = [char]0x276F', "`$sym = '$($PromptSymbol.Replace("'","''"))'")
+        Write-Ok "Prompt symbol set to '$PromptSymbol'"
+    }
+    if ($PredictionView) {
+        $ours = $ours.Replace('Set-PSReadLineOption -PredictionViewStyle ListView',
+                              "Set-PSReadLineOption -PredictionViewStyle $PredictionView")
+        Write-Ok "PSReadLine prediction view set to $PredictionView"
+    }
+
+    $final = if ($existing) { $existing + "`r`n`r`n" + $ours } else { $ours }
+    Set-Content -Path $profilePath -Value $final -Encoding utf8
+
+    $perr = $null
+    [System.Management.Automation.Language.Parser]::ParseFile($profilePath, [ref]$null, [ref]$perr) | Out-Null
+    if ($perr) { Write-Warn2 "Profile wrote but has parse errors: $perr" } else { Write-Ok "Profile installed and parses cleanly" }
+} else {
+    Write-Step "Skipping PowerShell profile (-SkipProfile)"
 }
-
-$existing = if (Test-Path $profilePath) { Get-Content $profilePath -Raw } else { '' }
-# Strip our managed regions so re-running never duplicates them.
-foreach ($marker in 'startup-env','conda lazy-init','prompt','PSReadLine') {
-    $existing = [regex]::Replace($existing, "(?s)#region $([regex]::Escape($marker)).*?#endregion\s*", '')
-}
-$existing = $existing.TrimEnd()
-$ours = (Get-Content $src -Raw).TrimEnd()
-$final = if ($existing) { $existing + "`r`n`r`n" + $ours } else { $ours }
-Set-Content -Path $profilePath -Value $final -Encoding utf8
-
-$perr = $null
-[System.Management.Automation.Language.Parser]::ParseFile($profilePath, [ref]$null, [ref]$perr) | Out-Null
-if ($perr) { Write-Warn2 "Profile wrote but has parse errors: $perr" } else { Write-Ok "Profile installed and parses cleanly" }
 
 # ---------------------------------------------------------------------
 # 4. Windows Terminal settings.json (font + Ctrl+Arrow pass-through)
@@ -188,7 +263,23 @@ if (-not $SkipTerminal) {
             if (-not $j.profiles) { $j | Add-Member -NotePropertyName profiles -NotePropertyValue ([pscustomobject]@{}) -Force }
             if (-not $j.profiles.defaults) { $j.profiles | Add-Member -NotePropertyName defaults -NotePropertyValue ([pscustomobject]@{}) -Force }
             $font = [pscustomobject]@{ face = $detectedFamily; features = [pscustomobject]@{ liga = 1; calt = 1 } }
+            if ($PSBoundParameters.ContainsKey('FontSize')) {
+                $font | Add-Member -NotePropertyName size -NotePropertyValue $FontSize -Force
+            }
             $j.profiles.defaults | Add-Member -NotePropertyName font -NotePropertyValue $font -Force
+
+            # Optional look-and-feel overrides, applied only when requested.
+            $extra = @()
+            if ($ColorScheme) {
+                $j.profiles.defaults | Add-Member -NotePropertyName colorScheme -NotePropertyValue $ColorScheme -Force
+                $extra += "colorScheme='$ColorScheme'"
+            }
+            if ($PSBoundParameters.ContainsKey('Opacity')) {
+                $j.profiles.defaults | Add-Member -NotePropertyName opacity -NotePropertyValue $Opacity -Force
+                $j.profiles.defaults | Add-Member -NotePropertyName useAcrylic -NotePropertyValue ($Opacity -lt 100) -Force
+                $extra += "opacity=$Opacity"
+            }
+            if ($PSBoundParameters.ContainsKey('FontSize')) { $extra += "size=$FontSize" }
 
             # Ctrl+Left/Right (+Shift) pass-through: unbind in Terminal so the shell gets them.
             # Use the current { "id": null } schema (NOT { "command": "unbound" }, which makes
@@ -204,7 +295,8 @@ if (-not $SkipTerminal) {
             $out = $j | ConvertTo-Json -Depth 32
             $null = $out | ConvertFrom-Json    # validate before writing
             Set-Content -Path $wt -Value $out -Encoding utf8
-            Write-Ok "Font set to '$detectedFamily' (liga+calt) on profiles.defaults; Ctrl+Arrow freed (backup: settings.json.bak)"
+            $extraMsg = if ($extra) { " [$($extra -join ', ')]" } else { '' }
+            Write-Ok "Font set to '$detectedFamily' (liga+calt) on profiles.defaults$extraMsg; Ctrl+Arrow freed (backup: settings.json.bak)"
         } catch {
             Write-Warn2 "Terminal patch failed: $($_.Exception.Message) (original restored from .bak if needed)"
         }

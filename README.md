@@ -1,10 +1,38 @@
-# pwsh-terminal-setup
+<p align="center">
+  <img src="assets/logo.png" width="96" alt="pwsh-terminal-setup logo — a folder with a terminal prompt glyph">
+</p>
 
-A one-command setup for a **fast, good-looking PowerShell 7 + Windows Terminal** on Windows.
+<h1 align="center">pwsh-terminal-setup</h1>
+
+<p align="center">
+  <strong>A fast, good-looking PowerShell 7 + Windows Terminal — from a single command.</strong>
+</p>
+
+<p align="center">
+  <a href="https://learn.microsoft.com/powershell/scripting/install/installing-powershell-on-windows"><img alt="PowerShell 7+" src="https://img.shields.io/badge/PowerShell-7%2B-5391FE?logo=powershell&logoColor=white"></a>
+  <a href="https://aka.ms/terminal"><img alt="Windows 10/11" src="https://img.shields.io/badge/Windows-10%2F11-0078D6?logo=windows11&logoColor=white"></a>
+  <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/github/license/Abdullah-Masood-05/pwsh-terminal-setup?color=1E4E79"></a>
+  <a href="https://github.com/Abdullah-Masood-05/pwsh-terminal-setup/releases"><img alt="Latest release" src="https://img.shields.io/github/v/release/Abdullah-Masood-05/pwsh-terminal-setup?color=1E4E79&label=release"></a>
+  <a href="https://abdullah-masood-05.github.io/pwsh-terminal-setup/"><img alt="Docs" src="https://img.shields.io/badge/Docs-website-B0731F"></a>
+</p>
+
+<p align="center">
+  <a href="https://abdullah-masood-05.github.io/pwsh-terminal-setup/"><b>Documentation</b></a> ·
+  <a href="https://github.com/Abdullah-Masood-05/pwsh-terminal-setup/releases"><b>Download</b></a> ·
+  <a href="#install"><b>Install</b></a> ·
+  <a href="https://abdullah-masood-05.github.io/pwsh-terminal-setup/docs/manual-setup/"><b>Manual setup</b></a>
+</p>
+
+---
 
 It cuts shell startup from seconds to milliseconds by lazy-loading conda, installs a font with
 **both ligatures and Nerd Font icons**, adds a clean zsh-like prompt, and configures PSReadLine for
-syntax highlighting, smart history, and proper word navigation — all from a single script.
+syntax highlighting, smart history, and proper word navigation — all from one script, or a bundled
+installer with the font included.
+
+> **Full documentation** — screenshots, a step-by-step manual guide, the complete command reference,
+> and troubleshooting — lives on the **[documentation website](https://abdullah-masood-05.github.io/pwsh-terminal-setup/)**.
+> This README is the short version.
 
 ## Preview
 
@@ -31,21 +59,21 @@ syntax highlighting, smart history, and proper word navigation — all from a si
 
 ## Features
 
-- **⚡ Fast startup** — conda is loaded on first use instead of on every launch, taking startup from
+- **Fast startup** — conda is loaded on first use instead of on every launch, taking startup from
   ~2.3 s to ~0.3 s. PowerShell telemetry and the update-check banner are disabled.
-- **🔤 Ligatures + icons** — installs [LigaConsolas Nerd Font](https://github.com/Dosx001/ttf-ligaconsolas-nerd-font)
+- **Ligatures + icons** — installs [LigaConsolas Nerd Font](https://github.com/Dosx001/ttf-ligaconsolas-nerd-font)
   (a Consolas-style font with programming ligatures *and* Nerd Font glyphs) per-user, no admin.
-- **❯ Minimal zsh-like prompt** — path, active conda env, and git branch. The branch is read straight
+- **Minimal zsh-like prompt** — path, active conda env, and git branch. The branch is read straight
   from `.git/HEAD`, so rendering the prompt never spawns `git` (instant, even in big repos).
-- **✨ Great editing** — PSReadLine with a dark syntax-highlighting palette, history-based predictions
+- **Great editing** — PSReadLine with a dark syntax-highlighting palette, history-based predictions
   (ListView), prefix history search on ↑/↓, and `Ctrl+←/→` word jumps that actually work in Windows
   Terminal.
 
 ## Requirements
 
 - Windows 10/11
-- [PowerShell 7+](https://github.com/PowerShell/PowerShell) (`winget install --id Microsoft.PowerShell -e`)
-- [Windows Terminal](https://aka.ms/terminal) (`winget install --id Microsoft.WindowsTerminal -e`)
+- [PowerShell 7+](https://learn.microsoft.com/powershell/scripting/install/installing-powershell-on-windows) — `winget install --id Microsoft.PowerShell -e`
+- [Windows Terminal](https://aka.ms/terminal) — `winget install --id Microsoft.WindowsTerminal -e`
 
 ## Install
 
@@ -76,20 +104,37 @@ Write-Host "Icons: `u{e0a0}  `u{f07b}   Ligatures: ==> -> != >= <=   Emoji: 🚀
 You should see the branch/folder icons, joined operators, and color emoji. Try `Ctrl+←` / `Ctrl+→`
 to jump word-by-word.
 
-### Options
+## Customize from the command line
+
+You don't have to hand-edit any file — the installer takes settings as parameters and applies them
+in one run:
 
 ```powershell
-.\install.ps1 -SkipFont          # don't touch fonts
-.\install.ps1 -SkipTerminal      # don't patch Windows Terminal settings
-.\install.ps1 -FontFamily "Your Font Name"
+# Font size, color scheme, prompt symbol, and prediction style in one shot
+.\install.ps1 -FontSize 12 -ColorScheme "One Half Dark" -PromptSymbol "➜" -PredictionView InlineView
+
+# Prompt + editing config only — skip conda and fonts
+.\install.ps1 -SkipConda -SkipFont
 ```
 
-## What the installer does
+| Parameter | What it changes |
+|---|---|
+| `-FontSize <n>` | Windows Terminal font size |
+| `-ColorScheme <name>` | Windows Terminal color scheme (must already exist in `settings.json`) |
+| `-Opacity <0-100>` | Window background opacity (enables acrylic below 100) |
+| `-PromptSymbol <char>` | The prompt glyph (default `❯`) |
+| `-PredictionView <ListView\|InlineView>` | PSReadLine prediction style |
+| `-FontFamily <name>` | Font family used in Windows Terminal |
+| `-SkipFont` / `-SkipTerminal` / `-SkipProfile` / `-SkipConda` | Skip a step |
+
+See the full **[installer options reference](https://abdullah-masood-05.github.io/pwsh-terminal-setup/docs/installer-options/)** in the docs.
+
+## What it installs
 
 | Step | Action | Safety |
 |------|--------|--------|
 | 1 | Sets `POWERSHELL_TELEMETRY_OPTOUT` and `POWERSHELL_UPDATECHECK` at **User** scope | env vars only |
-| 2 | Downloads + installs LigaConsolas Nerd Font (per-user, registered in HKCU) | reads the family name via .NET |
+| 2 | Installs LigaConsolas Nerd Font (per-user, registered in HKCU) | reads the family name via .NET |
 | 3 | Writes the profile to `$PROFILE.CurrentUserAllHosts` | backs up to `profile.ps1.bak`; merges idempotently |
 | 4 | Sets the font on Windows Terminal `profiles.defaults` and frees `Ctrl+←/→` | backs up `settings.json.bak`; JSON validated |
 | 5 | Measures startup and confirms conda is a lazy placeholder | — |
@@ -97,22 +142,14 @@ to jump word-by-word.
 Everything is **idempotent** (safe to re-run) and **portable** (paths resolved dynamically; conda is
 auto-detected across anaconda3 / miniconda3 / miniforge3 / PATH).
 
-## The profile
+## Prefer to configure it by hand?
 
-[`profile.ps1`](profile.ps1) is the whole configuration and is readable on its own. It's organized
-into four `#region` blocks: `startup-env`, `conda lazy-init`, `prompt`, and `PSReadLine`. The
-installer merges these blocks into your existing profile without disturbing anything else.
-
-## Windows Terminal
-
-The installer patches your `settings.json` directly. If you'd rather apply it by hand, see
-[`windows-terminal/settings.partial.jsonc`](windows-terminal/settings.partial.jsonc) for just the
-font and keybinding fragments.
-
-> **Note on `Ctrl+←/→`:** word navigation needs two layers — Windows Terminal must *not* capture the
-> keys (the unbinds), and PSReadLine must bind them (done in the profile). The unbinds use the current
-> `{ "id": null }` schema; the older `{ "command": "unbound" }` form makes Windows Terminal rewrite
-> `settings.json` on every launch and can throw a "could not write settings" error.
+The **[manual setup guide](https://abdullah-masood-05.github.io/pwsh-terminal-setup/docs/manual-setup/)**
+walks through every step — installing PowerShell 7, **downloading and installing the Nerd Font**,
+adding the profile, and patching Windows Terminal — with copy-able commands. The profile
+([`profile.ps1`](profile.ps1)) and the Windows Terminal fragments
+([`windows-terminal/settings.partial.jsonc`](windows-terminal/settings.partial.jsonc)) are readable
+on their own.
 
 ## Uninstall / restore
 
