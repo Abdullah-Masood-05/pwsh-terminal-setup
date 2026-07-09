@@ -189,6 +189,11 @@ samp {
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
 }
+/* .section + .section zeroes padding-top; restore breathing room above the
+   heading here specifically (matches the 64px used before "What it installs"). */
+.section--tint .section__head {
+    padding-top: 10px;
+}
 .eyebrow {
     font-family: var(--font-mono);
     font-size: 13px;
