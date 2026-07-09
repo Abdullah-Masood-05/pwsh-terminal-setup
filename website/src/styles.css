@@ -192,7 +192,7 @@ samp {
 /* .section + .section zeroes padding-top; restore breathing room above the
    heading here specifically (matches the 64px used before "What it installs"). */
 .section--tint .section__head {
-    padding-top: 10px;
+    padding-top: 30px;
 }
 .eyebrow {
     font-family: var(--font-mono);
