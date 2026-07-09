@@ -109,16 +109,20 @@ export function demo({
     })
     .join("");
   const cap = caption ? `\n<p class="demo__caption">${esc(caption)}</p>` : "";
+  // The window (bar + tabs + screen) carries the black background and border;
+  // the caption sits OUTSIDE it, on the page, like a screenshot caption.
   return `<figure class="demo" data-demo>
-  <div class="demo__bar">
-    <span class="demo__wintab">
-      <span class="demo__winicon" aria-hidden="true">${winIcon}</span>
-      <span class="demo__file">${esc(file)}</span>
-    </span>
-    <span class="demo__winbtns" aria-hidden="true"><i class="demo__win demo__win--min"></i><i class="demo__win demo__win--max"></i><i class="demo__win demo__win--close"></i></span>
+  <div class="demo__window">
+    <div class="demo__bar">
+      <span class="demo__wintab">
+        <span class="demo__winicon" aria-hidden="true">${winIcon}</span>
+        <span class="demo__file">${esc(file)}</span>
+      </span>
+      <span class="demo__winbtns" aria-hidden="true"><i class="demo__win demo__win--min"></i><i class="demo__win demo__win--max"></i><i class="demo__win demo__win--close"></i></span>
+    </div>
+    <div class="demo__tabs" role="tablist" aria-label="${escAttr(label)}">${tabBtns}</div>
+    <div class="demo__screen">${panels}</div>
   </div>
-  <div class="demo__tabs" role="tablist" aria-label="${escAttr(label)}">${tabBtns}</div>
-  <div class="demo__screen">${panels}</div>
   ${cap}
 </figure>`;
 }

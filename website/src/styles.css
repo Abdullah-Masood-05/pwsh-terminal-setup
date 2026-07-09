@@ -383,7 +383,7 @@ samp {
 .cmd {
     margin: 24px 0;
     background: var(--terminal);
-    border: 1px solid var(--term-line);
+    border: 1px solid var(--line);
     border-radius: var(--r-lg);
     overflow: hidden;
     color: var(--term-plain);
@@ -735,8 +735,12 @@ td .swatch + code {
 
 /* before/after terminal (signature element) — a Windows Terminal window */
 .demo {
+    margin: 0;
+}
+/* the window carries the black surface + frame; the caption stays outside it */
+.demo__window {
     background: var(--terminal);
-    border: 1px solid var(--term-line);
+    border: 1px solid var(--line);
     border-radius: var(--r-lg);
     overflow: hidden;
 }
@@ -846,6 +850,14 @@ td .swatch + code {
 }
 .demo__panel[hidden] {
     display: none;
+}
+/* the "Default" (before setup) panel is the stock font — no ligatures, so
+   operators like ==> and -> render as separate characters */
+.demo__panel[data-panel="before"] {
+    font-feature-settings:
+        "liga" 0,
+        "calt" 0;
+    font-variant-ligatures: none;
 }
 .demo__panel:focus-visible {
     outline: none;
