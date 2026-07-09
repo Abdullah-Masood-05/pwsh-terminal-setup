@@ -15,8 +15,9 @@ const hero = `
       <div class="hero__text">
         <p class="hero__label">PowerShell 7 · Windows Terminal</p>
         <h1>A better PowerShell prompt, one installer away.</h1>
-        <p class="lead">A fast, good-looking terminal — ligatures and icons, a clean git-aware prompt,
-          and syntax highlighting — set up from a single installer with the font already inside it.</p>
+        <p class="lead">A fast, good-looking terminal — a clean git-aware prompt, history search that
+          recalls past commands as you type, and ligatures with Nerd Font icons — all from one installer
+          with the font already inside it.</p>
         <div class="hero__cta">
           ${btn({ label: "Download installer", href: links.releases, variant: "primary", external: true })}
           ${btn({ label: "Set up manually →", route: "docs/manual-setup", variant: "secondary" })}
@@ -44,6 +45,27 @@ const paths = `
           and patch Windows Terminal by hand.</p>
         ${btn({ label: "Open the guide", route: "docs/manual-setup", variant: "secondary" })}
       </div>
+    </div>
+  </div>
+</section>`;
+
+const whyNotOmp = `
+<section class="section">
+  <div class="wrap">
+    <div class="section__head">
+      <h2>Why not Oh My Posh?</h2>
+      <p class="muted">Same clean, git-aware prompt — without the per-render cost.</p>
+    </div>
+    <div class="why">
+      <p><a href="https://ohmyposh.dev" target="_blank" rel="noopener">Oh My Posh <span class="ext" aria-hidden="true">↗</span></a>
+        is a powerful, full-featured prompt engine. But it's a <strong>separate program your shell runs on
+        every prompt</strong>, and that call isn't free — it shows up as a small pause before you can type,
+        and it gets worse in large repositories or over SSH.</p>
+      <p>This setup keeps the good part and drops the overhead. The prompt is a tiny native PowerShell
+        function that reads your git branch straight from <code>.git/HEAD</code> on disk — it never spawns
+        a process, so it renders <strong>instantly</strong>, even in huge repos, with no extra binary to
+        install or keep updated. Together with lazy-loaded conda and telemetry off, cold startup drops from
+        about <strong>2.3&nbsp;s to 0.3&nbsp;s</strong>.</p>
     </div>
   </div>
 </section>`;
@@ -113,5 +135,5 @@ export default {
   title: "pwsh-terminal-setup — a better PowerShell prompt, one installer away",
   description:
     "A fast, good-looking PowerShell 7 + Windows Terminal setup. One installer with the Nerd Font bundled, or a step-by-step manual guide.",
-  body: hero + paths + whatYouGet + whatItInstalls,
+  body: hero + paths + whyNotOmp + whatYouGet + whatItInstalls,
 };

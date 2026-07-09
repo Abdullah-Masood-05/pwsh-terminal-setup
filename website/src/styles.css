@@ -966,6 +966,27 @@ td .swatch + code {
     margin-top: 0;
 }
 
+/* "Why not Oh My Posh?" explainer prose */
+.why {
+    max-width: 66ch;
+}
+.why p {
+    font-size: 17px;
+    line-height: 1.7;
+    margin: 0 0 18px;
+}
+.why p:last-child {
+    margin-bottom: 0;
+}
+.why code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    color: var(--code-fg);
+    background: var(--code-bg);
+    padding: 1px 5px;
+    border-radius: var(--r-sm);
+}
+
 /* showcase — terminal demos in a responsive multi-column grid */
 .showcase {
     display: grid;
