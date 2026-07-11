@@ -1,8 +1,6 @@
-# Build output (produced by build.mjs; deployed from CI)
-dist/
-
-# Local screenshot/scratch folder used during development
-_shots/
+# Build output (produced by `vitepress build`; deployed from CI)
+.vitepress/dist/
+.vitepress/cache/
 
 node_modules/
 *.log

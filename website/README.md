@@ -1,7 +1,6 @@
 # Documentation website
 
-The download + documentation site for **pwsh-terminal-setup**, built with a small
-zero-dependency static generator (plain Node, no framework, no `npm install`).
+The download + documentation site for **pwsh-terminal-setup**, built with [VitePress](https://vitepress.dev).
 
 Live site: <https://abdullah-masood-05.github.io/pwsh-terminal-setup/>
 
@@ -9,44 +8,44 @@ Live site: <https://abdullah-masood-05.github.io/pwsh-terminal-setup/>
 
 ```powershell
 cd website
-node build.mjs      # render src/ -> dist/
-node serve.mjs      # preview dist/ at http://localhost:8080
-# or in one step:
-npm run dev
+bun install      # or: npm install
+bun run dev       # vitepress dev . — live-reloading local server
+bun run build     # vitepress build . — outputs to .vitepress/dist
+bun run preview   # serve the production build locally
 ```
 
-There's nothing to install — the scripts use only the Node standard library.
+Local dev uses `bun`; CI (see `.github/workflows/deploy-docs.yml`) uses `npm ci` +
+`npm run build` against the committed `package-lock.json`, so keep both lockfiles in sync
+when adding a dependency (`bun add -D <pkg>` then `npm install` once to refresh
+`package-lock.json`).
 
-## How it works
+## Structure
 
 | Path | What it is |
 |------|-----------|
-| `build.mjs` | Renders every page into `dist/<route>/index.html`. |
-| `serve.mjs` | Tiny static server for local preview (resolves pretty URLs). |
-| `src/site.mjs` | The page manifest — imports each page module. |
-| `src/pages/**` | One module per page; each exports `{ route, section, title, description, body }`. |
-| `src/lib/components.mjs` | HTML builders: `cmd`, `callout`, `shot`, `table`, `btn`, `h2`, … |
-| `src/lib/layout.mjs` | The page shells (base + docs chrome: sidebar, TOC, prev/next). |
-| `src/lib/nav.mjs` | Single source of truth for the top nav and docs sidebar. |
-| `src/styles.css` | The design system (see `../../design.md`). |
-| `src/main.js` | Progressive enhancement: copy buttons, the before/after toggle, mobile nav, scroll-spy. |
+| `.vitepress/config.mts` | Site config — nav, sidebar, base path, head tags, Shiki languages. |
+| `.vitepress/theme/index.ts` | Extends VitePress's default theme; registers the custom components below. |
+| `.vitepress/theme/style.css` | Design tokens (design.md) mapped onto VitePress's `--vp-*` variables, plus the homepage and terminal-demo styling. |
+| `.vitepress/theme/components/TerminalDemo.vue` | The site's signature element — a Windows Terminal window with an accessible before/after tablist. |
+| `.vitepress/theme/components/Demo*.vue` | Content-specific demos (prompt, ligatures, history search) built on `TerminalDemo`. |
+| `.vitepress/theme/components/Home.vue` | The homepage layout (hero, cards, "Why not Oh My Posh?", showcase, install table). |
+| `index.md` | Homepage — just embeds `<Home />` under `layout: page`. |
+| `docs/*.md` | Documentation pages, using VitePress's native sidebar/TOC/prev-next/search/dark-mode. |
+| `public/` | Static assets served as-is (logo, favicon, OG image). |
 
-Internal links and asset references use a `{{base}}` token that the build resolves to a
-per-page relative prefix, so the site works both at the GitHub Pages project subpath and
-from the local file system.
-
-Screenshots and the logo are pulled from the repo's top-level `assets/` folder at build
-time, so there's only one copy to maintain.
+Docs pages are plain Markdown with VitePress's built-in features: `::: tip Note` /
+`::: warning Important` containers for callouts (all four container types are restyled to the
+same amber look — design.md forbids a callout color rainbow), fenced code blocks with a
+copy button and a header strip, and `{#custom-id}` on headings to keep anchors stable.
 
 ## Add or edit a page
 
-1. Create `src/pages/<name>.mjs` (or under `src/pages/docs/`) exporting a page descriptor.
-2. Register it in `src/site.mjs`.
-3. For docs pages, add it to `docsNav` in `src/lib/nav.mjs` so it appears in the sidebar
-   and prev/next flow.
+1. Create `docs/<name>.md` with frontmatter (`title`, `description`) and content.
+2. Add it to `sidebar['/docs/']` in `.vitepress/config.mts` so it appears in the sidebar and
+   prev/next flow.
 
 ## Deploy
 
 Pushes to `main` that touch `website/**` or `assets/**` trigger
-`.github/workflows/deploy-docs.yml`, which builds the site and publishes `dist/` to GitHub
-Pages. Enable it once under **Settings → Pages → Source → GitHub Actions**.
+`.github/workflows/deploy-docs.yml`, which installs with `npm ci`, builds with
+`npm run build`, and publishes `.vitepress/dist` to GitHub Pages.
