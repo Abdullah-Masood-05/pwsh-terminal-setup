@@ -84,6 +84,7 @@ export default defineConfig({
             { text: 'Installer options', link: '/docs/installer-options' },
             { text: 'Commands & functions', link: '/docs/commands' },
             { text: 'Profile & theming', link: '/docs/customization' },
+            { text: 'Plugins', link: '/docs/plugins' },
           ],
         },
         {

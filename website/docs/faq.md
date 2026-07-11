@@ -43,6 +43,14 @@ directly in `settings.json`. For icons to render, use a Nerd Font.
 It's one of the few faces that has **both** programming ligatures and Nerd Font glyphs, so you get
 joined operators and branch/folder icons from a single font.
 
+## Extending {#extending}
+
+### Can I add more features, like git aliases or a system-info banner?
+
+Yes — see [Plugins](/docs/plugins). It's a separate, opt-in companion project
+([pwsh-plugins ↗](https://github.com/Abdullah-Masood-05/pwsh-plugins)) with git aliases, `zoxide`
+directory jumping, a `fastfetch` startup banner, and more. Nothing loads unless you install it by name.
+
 ## Safety and uninstall {#safety}
 
 ### Will it overwrite my existing profile?

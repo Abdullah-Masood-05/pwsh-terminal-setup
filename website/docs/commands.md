@@ -51,4 +51,5 @@ even before the profile loads.
 | `POWERSHELL_UPDATECHECK` | `Off` | Removes the startup update-check banner. |
 
 To change any of this — colors, the prompt symbol, or the prediction style — see
-[Profile & theming](/docs/customization).
+[Profile & theming](/docs/customization). Want more commands than this — git aliases, directory jumping,
+a startup banner? See [Plugins](/docs/plugins).
