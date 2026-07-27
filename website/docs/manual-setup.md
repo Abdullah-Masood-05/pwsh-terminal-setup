@@ -1,6 +1,6 @@
 ---
 title: Manual setup
-description: Set it up by hand: install PowerShell 7, download and install the Nerd Font, add the profile, and patch Windows Terminal.
+description: "Set it up by hand: install PowerShell 7, download and install the Nerd Font, add the profile, and patch Windows Terminal."
 ---
 
 # Manual setup
