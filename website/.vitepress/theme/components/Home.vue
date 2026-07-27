@@ -1,12 +1,34 @@
 <script setup>
 import { withBase } from 'vitepress'
+import { onMounted, ref } from 'vue'
 import DemoPrompt from './DemoPrompt.vue'
 import DemoLigatures from './DemoLigatures.vue'
 import DemoHistory from './DemoHistory.vue'
 
-const releases = 'https://github.com/Abdullah-Masood-05/pwsh-terminal-setup/releases'
+const repo = 'Abdullah-Masood-05/pwsh-terminal-setup'
+const releasesPage = `https://github.com/${repo}/releases`
 const powershell =
   'https://learn.microsoft.com/powershell/scripting/install/installing-powershell-on-windows'
+
+// Points at the releases page until the latest .exe asset resolves, then
+// switches to a direct download link so the button never blocks on the API.
+const downloadUrl = ref(releasesPage)
+const downloadIsDirect = ref(false)
+
+onMounted(async () => {
+  try {
+    const resp = await fetch(`https://api.github.com/repos/${repo}/releases/latest`)
+    if (!resp.ok) throw new Error(String(resp.status))
+    const release = await resp.json()
+    const asset = (release.assets ?? []).find((a) => /\.exe$/i.test(a.name))
+    if (asset) {
+      downloadUrl.value = asset.browser_download_url
+      downloadIsDirect.value = true
+    }
+  } catch {
+    // Rate-limited or offline: keep the releases-page fallback.
+  }
+})
 
 const installs = [
   ['Telemetry opt-out', 'Turns off PowerShell telemetry and the startup update-check banner (User scope).'],
@@ -32,7 +54,7 @@ const installs = [
             with the font already inside it.
           </p>
           <div class="hero__cta">
-            <a class="btn btn--primary" :href="releases" target="_blank" rel="noopener">Download installer <span class="ext" aria-hidden="true">↗</span></a>
+            <a class="btn btn--primary" :href="downloadUrl" :download="downloadIsDirect ? '' : null" target="_blank" rel="noopener">Download installer <span class="ext" aria-hidden="true">↗</span></a>
             <a class="btn btn--secondary" :href="withBase('/docs/manual-setup/')">Set up manually →</a>
           </div>
           <p class="hero__req">
@@ -51,7 +73,7 @@ const installs = [
         <div class="card">
           <h3>Installer</h3>
           <p>Everything in one run — the Nerd Font is included, so there are no extra downloads. Installs per-user, no admin needed.</p>
-          <a class="btn btn--primary" :href="releases" target="_blank" rel="noopener">Download installer <span class="ext" aria-hidden="true">↗</span></a>
+          <a class="btn btn--primary" :href="downloadUrl" :download="downloadIsDirect ? '' : null" target="_blank" rel="noopener">Download installer <span class="ext" aria-hidden="true">↗</span></a>
         </div>
         <div class="card">
           <h3>Manual setup</h3>

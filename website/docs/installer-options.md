@@ -1,6 +1,6 @@
 ---
 title: Installer options
-description: Every install.ps1 parameter: font size, color scheme, opacity, prompt symbol, prediction view, and the skip switches.
+description: "Every install.ps1 parameter: font size, color scheme, opacity, prompt symbol, prediction view, and the skip switches."
 ---
 
 # Installer options
