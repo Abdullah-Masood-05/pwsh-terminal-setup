@@ -137,7 +137,7 @@ See the full **[installer options reference](https://abdullah-masood-05.github.i
 | 2 | Installs LigaConsolas Nerd Font (per-user, registered in HKCU) | reads the family name via .NET |
 | 3 | Writes the profile to `$PROFILE.CurrentUserAllHosts` | backs up to `profile.ps1.bak`; merges idempotently |
 | 4 | Sets the font on Windows Terminal `profiles.defaults` and frees `Ctrl+←/→` | backs up `settings.json.bak`; JSON validated |
-| 5 | Measures startup and confirms conda is a lazy placeholder | — |
+| 5 | Measures startup and confirms conda is a lazy placeholder | n/a |
 
 Everything is **idempotent** (safe to re-run) and **portable** (paths resolved dynamically; conda is
 auto-detected across anaconda3 / miniconda3 / miniforge3 / PATH).

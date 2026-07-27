@@ -35,10 +35,10 @@ cd pwsh-plugins
 | `git-aliases` | Git shortcuts: `gco`, `gcb`, `gcm`, `gca`, `gaa`, `gst`, `gpl`, `gps`, `gd`, `gl` | ~0 ms | git |
 | `zoxide` | Smart `z` directory jumping | ~5 ms | **zoxide** |
 | `fastfetch` | System-info banner at startup | ~15 ms | **fastfetch** |
-| `psreadline-bindings` | Zsh-like keys: `Ctrl+Z` undo, `Alt+←/→` word jump, delete-word | ~0 ms | — |
-| `argument-completers` | Tab completion for git branches and winget | ~0 ms | — |
-| `custom-ls` | Colored `ls` output, no external module | ~0 ms | — |
-| `navigation-shortcuts` | `..`, `...`, `....`, `mkcd`, `home` | ~0 ms | — |
+| `psreadline-bindings` | Zsh-like keys: `Ctrl+Z` undo, `Alt+←/→` word jump, delete-word | ~0 ms | none |
+| `argument-completers` | Tab completion for git branches and winget | ~0 ms | none |
+| `custom-ls` | Colored `ls` output, no external module | ~0 ms | none |
+| `navigation-shortcuts` | `..`, `...`, `....`, `mkcd`, `home` | ~0 ms | none |
 
 Each plugin also ships its own README in the pwsh-plugins repo with the full command list and any caveats.
 

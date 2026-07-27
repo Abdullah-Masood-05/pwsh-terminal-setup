@@ -9,7 +9,7 @@ Three things, all free: Windows 10 or 11, PowerShell 7, and Windows Terminal.
 
 | Requirement | Why | Get it |
 |---|---|---|
-| Windows 10/11 | The font install and Windows Terminal patch are Windows-specific. | — |
+| Windows 10/11 | The font install and Windows Terminal patch are Windows-specific. | already have it |
 | PowerShell 7+ | The profile targets PowerShell 7. Windows PowerShell 5.1 is not enough. | [Microsoft ↗](https://learn.microsoft.com/powershell/scripting/install/installing-powershell-on-windows) |
 | Windows Terminal | Where the font and key bindings are applied. | [aka.ms/terminal ↗](https://aka.ms/terminal) |
 
