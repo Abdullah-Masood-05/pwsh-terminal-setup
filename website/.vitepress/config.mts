@@ -9,11 +9,11 @@ export default defineConfig({
     'A fast, good-looking PowerShell 7 + Windows Terminal setup. One installer with the Nerd Font bundled, or a step-by-step manual guide.',
   lang: 'en',
   base: '/pwsh-terminal-setup/',
-  appearance: 'dark', // dark by default, per the design spec — light is opt-in via the toggle
+  appearance: 'dark', // dark by default, per the design spec; light is opt-in via the toggle
   cleanUrls: true,
   lastUpdated: false,
   // README.md documents the website's own build tooling for contributors;
-  // context.md is scratch working notes — neither is site content.
+  // context.md is scratch working notes, neither is site content.
   srcExclude: ['README.md', 'context.md'],
 
   head: [
@@ -27,7 +27,7 @@ export default defineConfig({
       'meta',
       {
         property: 'og:image:alt',
-        content: 'pwsh-terminal-setup — a PowerShell 7 prompt with a git-aware terminal demo.',
+        content: 'pwsh-terminal-setup: a PowerShell 7 prompt with a git-aware terminal demo.',
       },
     ],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],

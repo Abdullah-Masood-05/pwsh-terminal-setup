@@ -1,9 +1,9 @@
 <script setup>
-// TerminalDemo.vue — the site's signature element (design B4): a fake Windows
+// TerminalDemo.vue: the site's signature element (design B4), a fake Windows
 // Terminal window (profile tab + min/max/close) with an accessible tablist
 // (Default / After setup) and one slotted panel per tab. Full ARIA tab
 // pattern: role="tablist"/"tab"/"tabpanel", roving tabindex, Arrow/Home/End
-// keyboard navigation — ported from the old vanilla-JS demo tablist.
+// keyboard navigation, ported from the old vanilla-JS demo tablist.
 import { ref, computed } from 'vue'
 
 const props = defineProps({

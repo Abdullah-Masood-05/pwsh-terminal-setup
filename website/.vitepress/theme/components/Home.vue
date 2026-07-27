@@ -35,7 +35,7 @@ const installs = [
   ['LigaConsolas Nerd Font', 'Programming ligatures and Nerd Font icons. Bundled in the installer.'],
   ['PowerShell profile', 'Installed to <code>$PROFILE.CurrentUserAllHosts</code>; merged idempotently, backed up first.'],
   ['Conda lazy-init', 'Loads conda on first use instead of every launch, for fast startup.'],
-  ['Minimal git prompt', 'Path, conda env, and branch read straight from <code>.git/HEAD</code> — no <code>git.exe</code>.'],
+  ['Minimal git prompt', 'Path, conda env, and branch read straight from <code>.git/HEAD</code>, no <code>git.exe</code>.'],
   ['PSReadLine config', 'Syntax highlighting, history predictions, prefix search, and word navigation.'],
   ['Windows Terminal patch', 'Sets the font on <code>profiles.defaults</code> and frees <code>Ctrl+←/→</code>.'],
 ]
@@ -49,8 +49,8 @@ const installs = [
           <p class="hero__label">PowerShell 7 · Windows Terminal</p>
           <h1>A better PowerShell prompt, one installer away.</h1>
           <p class="lead">
-            A fast, good-looking terminal — a clean git-aware prompt, history search that recalls
-            past commands as you type, and ligatures with Nerd Font icons — all from one installer
+            A fast, good-looking terminal: a clean git-aware prompt, history search that recalls
+            past commands as you type, and ligatures with Nerd Font icons, all from one installer
             with the font already inside it.
           </p>
           <div class="hero__cta">
@@ -58,7 +58,7 @@ const installs = [
             <a class="btn btn--secondary" :href="withBase('/docs/manual-setup/')">Set up manually →</a>
           </div>
           <p class="hero__req">
-            Requires PowerShell 7 —
+            Requires PowerShell 7:
             <a :href="powershell" target="_blank" rel="noopener">get it from Microsoft <span class="ext" aria-hidden="true">↗</span></a>
           </p>
         </div>
@@ -72,7 +72,7 @@ const installs = [
       <div class="cards">
         <div class="card">
           <h3>Installer</h3>
-          <p>Everything in one run — the Nerd Font is included, so there are no extra downloads. Installs per-user, no admin needed.</p>
+          <p>Everything in one run: the Nerd Font is included, so there are no extra downloads. Installs per-user, no admin needed.</p>
           <a class="btn btn--primary" :href="downloadUrl" :download="downloadIsDirect ? '' : null" target="_blank" rel="noopener">Download installer <span class="ext" aria-hidden="true">↗</span></a>
         </div>
         <div class="card">
@@ -88,18 +88,18 @@ const installs = [
     <div class="wrap">
       <div class="section__head">
         <h2>Why not Oh My Posh?</h2>
-        <p class="muted">Same clean, git-aware prompt — without the per-render cost.</p>
+        <p class="muted">Same clean, git-aware prompt, without the per-render cost.</p>
       </div>
       <div class="why">
         <p>
           <a href="https://ohmyposh.dev" target="_blank" rel="noopener">Oh My Posh <span class="ext" aria-hidden="true">↗</span></a>
           is a powerful, full-featured prompt engine. But it's a <strong>separate program your shell runs on
-          every prompt</strong>, and that call isn't free — it shows up as a small pause before you can type,
+          every prompt</strong>, and that call isn't free. It shows up as a small pause before you can type,
           and it gets worse in large repositories or over SSH.
         </p>
         <p>
           This setup keeps the good part and drops the overhead. The prompt is a tiny native PowerShell
-          function that reads your git branch straight from <code>.git/HEAD</code> on disk — it never spawns
+          function that reads your git branch straight from <code>.git/HEAD</code> on disk. It never spawns
           a process, so it renders <strong>instantly</strong>, even in huge repos, with no extra binary to
           install or keep updated. Together with lazy-loaded conda and telemetry off, cold startup drops
           from about <strong>2.3&nbsp;s to 0.3&nbsp;s</strong>.
