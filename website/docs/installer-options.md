@@ -1,12 +1,12 @@
 ---
 title: Installer options
-description: Every install.ps1 parameter — font size, color scheme, opacity, prompt symbol, prediction view, and the skip switches.
+description: Every install.ps1 parameter: font size, color scheme, opacity, prompt symbol, prediction view, and the skip switches.
 ---
 
 # Installer options
 
 You don't have to hand-edit any file. `install.ps1` takes the common settings as parameters and
-applies them in one run — font, colors, prompt, and prediction style included.
+applies them in one run, font, colors, prompt, and prediction style included.
 
 These are parameters to the setup **script**. Clone the repo (or use the copy the `.exe` installs)
 and run:
@@ -24,7 +24,7 @@ an arrow prompt, and inline predictions:
 .\install.ps1 -FontSize 12 -ColorScheme "One Half Dark" -PromptSymbol "➜" -PredictionView InlineView
 ```
 
-Or install just the prompt and editing config — no conda block, no font:
+Or install just the prompt and editing config, no conda block, no font:
 
 ```powershell
 .\install.ps1 -SkipConda -SkipFont
@@ -69,5 +69,5 @@ Every parameter is documented in the script's comment-based help:
 Get-Help .\install.ps1 -Detailed
 ```
 
-All changes are idempotent — re-running with different parameters just updates the result, and
+All changes are idempotent: re-running with different parameters just updates the result, and
 each touched file is backed up to `<file>.bak` first.

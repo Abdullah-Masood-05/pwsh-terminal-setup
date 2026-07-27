@@ -5,8 +5,8 @@ description: What pwsh-terminal-setup installs and the two ways to set it up.
 
 # Overview
 
-pwsh-terminal-setup turns a stock PowerShell 7 window into a fast, readable terminal — a
-git-aware prompt, ligatures and Nerd Font icons, and full syntax highlighting — from one command.
+pwsh-terminal-setup turns a stock PowerShell 7 window into a fast, readable terminal (a
+git-aware prompt, ligatures and Nerd Font icons, and full syntax highlighting) from one command.
 
 It cuts shell startup from seconds to milliseconds by loading conda only when you first use it,
 installs a font that has **both** programming ligatures and Nerd Font glyphs, adds a minimal
@@ -17,11 +17,11 @@ navigation. Every file it touches is backed up first, and re-running is safe.
 
 ## Two ways to install
 
-Pick whichever fits how you work — both end at the same setup.
+Pick whichever fits how you work. Both end at the same setup.
 
-- **[Installer](/docs/install-installer)** — one run, no admin, and the Nerd Font is bundled
+- **[Installer](/docs/install-installer)**: one run, no admin, and the Nerd Font is bundled
   inside it, so nothing else has to be downloaded.
-- **[Manual setup](/docs/manual-setup)** — the same result, one step at a time, including how to
+- **[Manual setup](/docs/manual-setup)**: the same result, one step at a time, including how to
   download and install the font yourself.
 
 ::: tip Note
@@ -34,7 +34,7 @@ separately when you use it.
 | Component | What it does |
 |---|---|
 | Telemetry opt-out | Sets `POWERSHELL_TELEMETRY_OPTOUT` and `POWERSHELL_UPDATECHECK` at User scope. |
-| Nerd Font | Installs LigaConsolas Nerd Font per-user (registered in HKCU) — ligatures and icons. |
+| Nerd Font | Installs LigaConsolas Nerd Font per-user (registered in HKCU): ligatures and icons. |
 | Profile | Writes `$PROFILE.CurrentUserAllHosts`: prompt, lazy conda, and PSReadLine config. |
 | Windows Terminal | Sets the font on `profiles.defaults` and frees `Ctrl+←/→` for word jumps. |
 
@@ -44,5 +44,5 @@ See [Commands & functions](/docs/commands) for everything the profile adds, and
 ## Before you begin
 
 You need PowerShell 7 and Windows Terminal on Windows 10 or 11. The
-[Requirements](/docs/requirements) page has the exact links and version checks — including where
+[Requirements](/docs/requirements) page has the exact links and version checks, including where
 to [download PowerShell 7 ↗](https://learn.microsoft.com/powershell/scripting/install/installing-powershell-on-windows).

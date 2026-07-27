@@ -1,6 +1,6 @@
 ---
 title: Requirements
-description: Windows 10/11, PowerShell 7, and Windows Terminal — with the exact install commands.
+description: Windows 10/11, PowerShell 7, and Windows Terminal, with the exact install commands.
 ---
 
 # Requirements
@@ -15,7 +15,7 @@ Three things, all free: Windows 10 or 11, PowerShell 7, and Windows Terminal.
 
 ## Install PowerShell 7 {#powershell}
 
-PowerShell 7 installs side-by-side with the built-in Windows PowerShell 5.1 — it does not replace
+PowerShell 7 installs side-by-side with the built-in Windows PowerShell 5.1. It does not replace
 it. The command below is the quickest route; you can also
 [download it from Microsoft ↗](https://learn.microsoft.com/powershell/scripting/install/installing-powershell-on-windows)
 directly.

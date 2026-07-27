@@ -31,7 +31,7 @@ pwsh -ExecutionPolicy Bypass -File .\install.ps1
 
 Cause: the Nerd Font isn't applied to the current Windows Terminal profile.
 
-Close *every* Windows Terminal window and open a new one — the font only applies to tabs opened
+Close *every* Windows Terminal window and open a new one. The font only applies to tabs opened
 after the patch. Then confirm the glyphs render:
 
 ```powershell
@@ -73,7 +73,7 @@ Get-Content $PROFILE.CurrentUserAllHosts | Select-Object -First 5
 
 Cause: Windows Terminal is still capturing the keys before the shell sees them.
 
-Word navigation needs both layers — the profile binds the keys, and Windows Terminal must release
+Word navigation needs both layers: the profile binds the keys, and Windows Terminal must release
 them. Add the unbinds from [step 4](/docs/manual-setup#terminal) and reopen the tab.
 
 ## Installer {#smartscreen}
@@ -87,7 +87,7 @@ Click **More info**, then **Run anyway**. If you'd rather not run the `.exe`, us
 
 ### `pwsh.exe not found on PATH` {#pwsh-missing}
 
-Cause: PowerShell 7 isn't installed — the setup targets it, not Windows PowerShell 5.1.
+Cause: PowerShell 7 isn't installed. The setup targets it, not Windows PowerShell 5.1.
 
 Install it, then reopen your terminal and re-run:
 

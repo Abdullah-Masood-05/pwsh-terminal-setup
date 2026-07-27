@@ -9,8 +9,8 @@ Live site: <https://abdullah-masood-05.github.io/pwsh-terminal-setup/>
 ```powershell
 cd website
 bun install      # or: npm install
-bun run dev       # vitepress dev . — live-reloading local server
-bun run build     # vitepress build . — outputs to .vitepress/dist
+bun run dev       # vitepress dev . (live-reloading local server)
+bun run build     # vitepress build . (outputs to .vitepress/dist)
 bun run preview   # serve the production build locally
 ```
 
@@ -23,19 +23,19 @@ when adding a dependency (`bun add -D <pkg>` then `npm install` once to refresh
 
 | Path | What it is |
 |------|-----------|
-| `.vitepress/config.mts` | Site config — nav, sidebar, base path, head tags, Shiki languages. |
+| `.vitepress/config.mts` | Site config: nav, sidebar, base path, head tags, Shiki languages. |
 | `.vitepress/theme/index.ts` | Extends VitePress's default theme; registers the custom components below. |
 | `.vitepress/theme/style.css` | Design tokens (design.md) mapped onto VitePress's `--vp-*` variables, plus the homepage and terminal-demo styling. |
-| `.vitepress/theme/components/TerminalDemo.vue` | The site's signature element — a Windows Terminal window with an accessible before/after tablist. |
+| `.vitepress/theme/components/TerminalDemo.vue` | The site's signature element: a Windows Terminal window with an accessible before/after tablist. |
 | `.vitepress/theme/components/Demo*.vue` | Content-specific demos (prompt, ligatures, history search) built on `TerminalDemo`. |
 | `.vitepress/theme/components/Home.vue` | The homepage layout (hero, cards, "Why not Oh My Posh?", showcase, install table). |
-| `index.md` | Homepage — just embeds `<Home />` under `layout: page`. |
+| `index.md` | Homepage, just embeds `<Home />` under `layout: page`. |
 | `docs/*.md` | Documentation pages, using VitePress's native sidebar/TOC/prev-next/search/dark-mode. |
 | `public/` | Static assets served as-is (logo, favicon, OG image). |
 
 Docs pages are plain Markdown with VitePress's built-in features: `::: tip Note` /
 `::: warning Important` containers for callouts (all four container types are restyled to the
-same amber look — design.md forbids a callout color rainbow), fenced code blocks with a
+same amber look (design.md forbids a callout color rainbow), fenced code blocks with a
 copy button and a header strip, and `{#custom-id}` on headings to keep anchors stable.
 
 ## Add or edit a page

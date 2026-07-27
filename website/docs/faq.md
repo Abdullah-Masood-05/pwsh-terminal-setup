@@ -11,26 +11,26 @@ Short answers to the questions that come up most.
 
 ### Do I need administrator rights?
 
-No. Everything is per-user — the font installs to your user font folder (registered in HKCU), and
+No. Everything is per-user: the font installs to your user font folder (registered in HKCU), and
 the profile and Windows Terminal settings live in your own user profile. No elevation, no system
 changes.
 
 ### Does it work with Windows PowerShell 5.1?
 
 It targets PowerShell 7 (`pwsh`). PowerShell 7 installs side-by-side with the built-in 5.1 and
-doesn't replace it. Install 7 first — see [Requirements](/docs/requirements).
+doesn't replace it. Install 7 first, see [Requirements](/docs/requirements).
 
 ### Can I install without an internet connection?
 
 Yes. The `.exe` installer bundles the font, so it works offline as-is. For the script, download
-the four `.ttf` files on another machine and pass `-FontDir` — see
+the four `.ttf` files on another machine and pass `-FontDir`, see
 [Offline install](/docs/installer-options#offline).
 
 ## Fonts and appearance {#fonts}
 
 ### Is the font really bundled in the installer?
 
-Yes. The installer includes all four LigaConsolas Nerd Font styles and installs them for you — you
+Yes. The installer includes all four LigaConsolas Nerd Font styles and installs them for you, you
 do not need to download or install any font separately when you use it.
 
 ### Can I use a different font?
@@ -47,7 +47,7 @@ joined operators and branch/folder icons from a single font.
 
 ### Can I add more features, like git aliases or a system-info banner?
 
-Yes — see [Plugins](/docs/plugins). It's a separate, opt-in companion project
+Yes, see [Plugins](/docs/plugins). It's a separate, opt-in companion project
 ([pwsh-plugins ↗](https://github.com/Abdullah-Masood-05/pwsh-plugins)) with git aliases, `zoxide`
 directory jumping, a `fastfetch` startup banner, and more. Nothing loads unless you install it by name.
 
@@ -60,7 +60,7 @@ markers, so anything else in your profile is left alone.
 
 ### Is it safe to re-run?
 
-Yes — it's idempotent. Re-running updates the managed regions in place instead of duplicating
+Yes, it's idempotent. Re-running updates the managed regions in place instead of duplicating
 them, and backs up each file it touches first.
 
 ### How do I uninstall or revert?

@@ -6,13 +6,13 @@ description: Customize the prompt symbol, syntax colors, prediction style, font 
 # Profile & theming
 
 The whole configuration is one readable file. Change it from the command line with installer
-parameters, or edit the profile directly — it's organized so each part is easy to find.
+parameters, or edit the profile directly. It's organized so each part is easy to find.
 
 Two ways to change things:
 
-- **From the command line** — re-run with [installer options](/docs/installer-options) like
+- **From the command line**: re-run with [installer options](/docs/installer-options) like
   `-PromptSymbol`, `-PredictionView`, `-FontSize`, or `-ColorScheme`. Nothing to hand-edit.
-- **By editing the profile** — open it and change the relevant region:
+- **By editing the profile**: open it and change the relevant region:
 
 ```powershell
 code $PROFILE.CurrentUserAllHosts     # or: notepad $PROFILE.CurrentUserAllHosts
@@ -43,7 +43,7 @@ $sym = '➜'
 ## Change the syntax colors {#colors}
 
 The default palette is Tokyo Night-inspired. Edit the `Set-PSReadLineOption -Colors` hashtable in
-the `PSReadLine` region — override only the tokens you care about:
+the `PSReadLine` region, overriding only the tokens you care about:
 
 ```powershell
 Set-PSReadLineOption -Colors @{

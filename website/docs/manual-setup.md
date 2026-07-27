@@ -1,6 +1,6 @@
 ---
 title: Manual setup
-description: Set it up by hand — install PowerShell 7, download and install the Nerd Font, add the profile, and patch Windows Terminal.
+description: Set it up by hand: install PowerShell 7, download and install the Nerd Font, add the profile, and patch Windows Terminal.
 ---
 
 # Manual setup
@@ -31,7 +31,7 @@ pwsh --version
 
 ## Install the Nerd Font {#font}
 
-The setup uses **LigaConsolas Nerd Font** — a Consolas-style face that has programming ligatures
+The setup uses **LigaConsolas Nerd Font**, a Consolas-style face that has programming ligatures
 *and* Nerd Font glyphs. Download its four styles (Regular, Bold, Italic, Bold Italic) from the
 [font repository ↗](https://github.com/Dosx001/ttf-ligaconsolas-nerd-font). This command fetches
 all four into your Downloads folder and opens it:
@@ -47,7 +47,7 @@ Start-Process $dir      # opens the folder so you can install the fonts
 ```
 
 In the folder that opens, select all four `.ttf` files, right-click, and choose **Install** (or
-*Install for all users*). Then set the face in Windows Terminal — merge this into
+*Install for all users*). Then set the face in Windows Terminal, merge this into
 `profiles → defaults` in `settings.json`:
 
 ```jsonc
@@ -64,7 +64,7 @@ In the folder that opens, select all four `.ttf` files, right-click, and choose 
 <DemoLigatures caption="With the font applied: joined operators and Nerd Font icons render." />
 
 ::: tip Tip
-Using the installer instead? Skip this step — the font is bundled and installed for you.
+Using the installer instead? Skip this step: the font is bundled and installed for you.
 :::
 
 ## Install the profile {#profile}
@@ -94,7 +94,7 @@ profile you want to keep? Append the downloaded file's contents instead, or use 
 ## Windows Terminal settings {#terminal}
 
 Two changes finish the setup. Open `settings.json` from Windows Terminal (<kbd>Ctrl</kbd> +
-<kbd>Shift</kbd> + <kbd>,</kbd>) — it lives at
+<kbd>Shift</kbd> + <kbd>,</kbd>), it lives at
 `%LOCALAPPDATA%\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json`.
 
 **1. Apply the font** to every profile via `defaults` (the same fragment as above):
@@ -123,7 +123,7 @@ top-level `keybindings` array:
 ```
 
 ::: tip Note
-Use the `"id": null` schema shown here, **not** `{ "command": "unbound" }` — the older form makes
+Use the `"id": null` schema shown here, **not** `{ "command": "unbound" }`. The older form makes
 Windows Terminal rewrite `settings.json` on every launch. The full reference fragment is in
 [settings.partial.jsonc ↗](https://github.com/Abdullah-Masood-05/pwsh-terminal-setup/blob/main/windows-terminal/settings.partial.jsonc).
 :::
@@ -138,4 +138,4 @@ Write-Host "Icons: `u{e0a0}  `u{f07b}   Ligatures: ==> -> != >= <=   Emoji: 🚀
 
 You should see branch and folder icons, joined operators, and color emoji. Then press
 <kbd>Ctrl</kbd> + <kbd>←</kbd> / <kbd>Ctrl</kbd> + <kbd>→</kbd> to jump word-by-word. If glyphs
-show as boxes, the font isn't applied — see [Troubleshooting](/docs/troubleshooting).
+show as boxes, the font isn't applied, see [Troubleshooting](/docs/troubleshooting).

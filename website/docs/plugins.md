@@ -1,15 +1,15 @@
 ---
 title: Plugins
-description: Add opt-in extras like git aliases, zoxide, and a startup banner from the companion pwsh-plugins repo — install only what you use.
+description: Add opt-in extras like git aliases, zoxide, and a startup banner from the companion pwsh-plugins repo. Install only what you use.
 ---
 
 # Plugins
 
-pwsh-terminal-setup stays minimal on purpose — the base profile is the prompt, ligatures, and PSReadLine,
+pwsh-terminal-setup stays minimal on purpose: the base profile is the prompt, ligatures, and PSReadLine,
 nothing else. For everything beyond that (git aliases, directory jumping, a startup banner...), there's a
 separate, opt-in companion project: **[pwsh-plugins ↗](https://github.com/Abdullah-Masood-05/pwsh-plugins)**.
 
-It follows the same philosophy as this project — nothing loads unless you explicitly install it, and every
+It follows the same philosophy as this project: nothing loads unless you explicitly install it, and every
 plugin lists its startup cost up front. It has no dependency on pwsh-terminal-setup and works on any
 PowerShell 7 profile, but it's built to complement this one.
 
@@ -44,13 +44,13 @@ Each plugin also ships its own README in the pwsh-plugins repo with the full com
 
 ## Plugins that need a real tool installed {#external-tools}
 
-Most plugins are self-contained PowerShell — installing the `.config` is the whole story. `zoxide` and
+Most plugins are self-contained PowerShell: installing the `.config` is the whole story. `zoxide` and
 `fastfetch` are different: they're thin wrappers around an actual program (`zoxide.exe`, `fastfetch.exe`)
-that has to exist on your machine. Adding the plugin's config alone doesn't install that program — it only
+that has to exist on your machine. Adding the plugin's config alone doesn't install that program, it only
 wires up the PowerShell side.
 
 ::: warning Important
-You can't get `zoxide` or `fastfetch` working by only running `addconfig.ps1` — the underlying tool has to
+You can't get `zoxide` or `fastfetch` working by only running `addconfig.ps1`. The underlying tool has to
 be installed too. `addconfig.ps1` makes this easy: if the required tool isn't on `PATH`, it detects that and
 offers to run the `winget install` for you right then, before it finishes adding the plugin.
 :::
@@ -62,7 +62,7 @@ winget install --id ajeetdsouza.zoxide -e         # for the zoxide plugin
 winget install --id Fastfetch-cli.Fastfetch -e    # for the fastfetch plugin
 ```
 
-Either way, each plugin's PowerShell side is written to be safe if its tool is ever missing — it no-ops
+Either way, each plugin's PowerShell side is written to be safe if its tool is ever missing: it no-ops
 instead of erroring, so a partially-set-up plugin won't break your prompt.
 
 ## Add more plugins later, or write your own {#custom}
@@ -73,7 +73,7 @@ Adding another plugin later is the same one-liner:
 .\addconfig.ps1 --fastfetch.config
 ```
 
-Writing your own is a copy of a template plus a metadata header — no build step, no plugin API to learn:
+Writing your own is a copy of a template plus a metadata header, no build step, no plugin API to learn:
 
 ```powershell
 Copy-Item templates\plugin-template.config plugins\my-plugin\my-plugin.config
@@ -81,9 +81,9 @@ Copy-Item templates\plugin-template.config plugins\my-plugin\my-plugin.config
 
 Each plugin is a single `.config` file: a small metadata header (`# Plugin:`, `# Dependencies:` for other
 plugins it needs, `# Requires:` for external tools written as `cmd|winget-id`, `# Startup Cost:`) followed
-by plain PowerShell that gets appended to your profile between named markers — nothing hidden, nothing
-compiled. The full guide — naming rules, the Dependencies-vs-Requires distinction, and the complete header
-format — is in the
+by plain PowerShell that gets appended to your profile between named markers: nothing hidden, nothing
+compiled. The full guide (naming rules, the Dependencies-vs-Requires distinction, and the complete header
+format) is in the
 **[Create your own plugin ↗](https://github.com/Abdullah-Masood-05/pwsh-plugins#create-your-own-plugin)**
 section of the pwsh-plugins README.
 
@@ -100,5 +100,5 @@ Every install and removal backs up your profile first (the last 5 are kept), so 
 
 ---
 
-Full usage — every flag, dependency resolution, and each plugin's own README — lives in the
+Full usage (every flag, dependency resolution, and each plugin's own README) lives in the
 **[pwsh-plugins repository ↗](https://github.com/Abdullah-Masood-05/pwsh-plugins)**.
