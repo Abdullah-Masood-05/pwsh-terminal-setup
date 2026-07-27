@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="assets/logo.png" width="96" alt="pwsh-terminal-setup logo — a folder with a terminal prompt glyph">
+  <img src="assets/logo.png" width="96" alt="pwsh-terminal-setup logo: a folder with a terminal prompt glyph">
 </p>
 
 <h1 align="center">pwsh-terminal-setup</h1>
 
 <p align="center">
-  <strong>A fast, good-looking PowerShell 7 + Windows Terminal — from a single command.</strong>
+  <strong>A fast, good-looking PowerShell 7 + Windows Terminal setup, from a single command.</strong>
 </p>
 
 <p align="center">
@@ -27,11 +27,11 @@
 
 It cuts shell startup from seconds to milliseconds by lazy-loading conda, installs a font with
 **both ligatures and Nerd Font icons**, adds a clean zsh-like prompt, and configures PSReadLine for
-syntax highlighting, smart history, and proper word navigation — all from one script, or a bundled
+syntax highlighting, smart history, and proper word navigation, all from one script, or a bundled
 installer with the font included.
 
-> **Full documentation** — screenshots, a step-by-step manual guide, the complete command reference,
-> and troubleshooting — lives on the **[documentation website](https://abdullah-masood-05.github.io/pwsh-terminal-setup/)**.
+> **Full documentation**, including screenshots, a step-by-step manual guide, the complete command
+> reference, and troubleshooting, lives on the **[documentation website](https://abdullah-masood-05.github.io/pwsh-terminal-setup/)**.
 > This README is the short version.
 
 ## Preview
@@ -44,50 +44,50 @@ installer with the font included.
     <td width="50%"><img src="assets/screenshots/syntax-highlighting.png" width="100%" alt="Syntax highlighting"></td>
   </tr>
   <tr>
-    <td><b>Minimal prompt</b> — path, conda env, and git branch (with branch glyph).</td>
-    <td><b>Syntax highlighting</b> — commands, parameters, strings, numbers, operators.</td>
+    <td><b>Minimal prompt</b>: path, conda env, and git branch (with branch glyph).</td>
+    <td><b>Syntax highlighting</b>: commands, parameters, strings, numbers, operators.</td>
   </tr>
   <tr>
     <td><img src="assets/screenshots/history-prediction.png" width="100%" alt="History prediction"></td>
     <td><img src="assets/screenshots/ligatures-icons.png" width="100%" alt="Ligatures and icons"></td>
   </tr>
   <tr>
-    <td><b>History predictions</b> — past commands suggested as a ListView dropdown.</td>
-    <td><b>Ligatures + Nerd icons</b> — <code>==&gt;</code> <code>!=</code> <code>-&gt;</code> join; branch/folder glyphs render.</td>
+    <td><b>History predictions</b>: past commands suggested as a ListView dropdown.</td>
+    <td><b>Ligatures + Nerd icons</b>: <code>==&gt;</code> <code>!=</code> <code>-&gt;</code> join; branch/folder glyphs render.</td>
   </tr>
 </table>
 
 ## Features
 
-- **Fast startup** — conda is loaded on first use instead of on every launch, taking startup from
+- **Fast startup**: conda is loaded on first use instead of on every launch, taking startup from
   ~2.3 s to ~0.3 s. PowerShell telemetry and the update-check banner are disabled.
-- **Ligatures + icons** — installs [LigaConsolas Nerd Font](https://github.com/Dosx001/ttf-ligaconsolas-nerd-font)
+- **Ligatures + icons**: installs [LigaConsolas Nerd Font](https://github.com/Dosx001/ttf-ligaconsolas-nerd-font)
   (a Consolas-style font with programming ligatures *and* Nerd Font glyphs) per-user, no admin.
-- **Minimal zsh-like prompt** — path, active conda env, and git branch. The branch is read straight
+- **Minimal zsh-like prompt**: path, active conda env, and git branch. The branch is read straight
   from `.git/HEAD`, so rendering the prompt never spawns `git` (instant, even in big repos).
-- **Great editing** — PSReadLine with a dark syntax-highlighting palette, history-based predictions
+- **Great editing**: PSReadLine with a dark syntax-highlighting palette, history-based predictions
   (ListView), prefix history search on ↑/↓, and `Ctrl+←/→` word jumps that actually work in Windows
   Terminal.
 
 ## Requirements
 
 - Windows 10/11
-- [PowerShell 7+](https://learn.microsoft.com/powershell/scripting/install/installing-powershell-on-windows) — `winget install --id Microsoft.PowerShell -e`
-- [Windows Terminal](https://aka.ms/terminal) — `winget install --id Microsoft.WindowsTerminal -e`
+- [PowerShell 7+](https://learn.microsoft.com/powershell/scripting/install/installing-powershell-on-windows): `winget install --id Microsoft.PowerShell -e`
+- [Windows Terminal](https://aka.ms/terminal): `winget install --id Microsoft.WindowsTerminal -e`
 
 ## Install
 
-### Option A — Installer (recommended)
+### Option A: Installer (recommended)
 
 1. Download the latest **`pwsh-terminal-setup-x.y.z-Setup.exe`** from the
    [Releases](https://github.com/Abdullah-Masood-05/pwsh-terminal-setup/releases) page.
 2. Run it. It installs per-user (no admin needed), **bundles the font so it works offline**, and
    applies the whole setup.
 
-> The installer is unsigned, so Windows SmartScreen may warn on first launch — click **More info →
+> The installer is unsigned, so Windows SmartScreen may warn on first launch. Click **More info →
 > Run anyway**. PowerShell 7 must be installed first (the installer checks and tells you if not).
 
-### Option B — Script
+### Option B: Script
 
 ```powershell
 git clone https://github.com/Abdullah-Masood-05/pwsh-terminal-setup.git
@@ -106,14 +106,14 @@ to jump word-by-word.
 
 ## Customize from the command line
 
-You don't have to hand-edit any file — the installer takes settings as parameters and applies them
+You don't have to hand-edit any file. The installer takes settings as parameters and applies them
 in one run:
 
 ```powershell
 # Font size, color scheme, prompt symbol, and prediction style in one shot
 .\install.ps1 -FontSize 12 -ColorScheme "One Half Dark" -PromptSymbol "➜" -PredictionView InlineView
 
-# Prompt + editing config only — skip conda and fonts
+# Prompt + editing config only, skip conda and fonts
 .\install.ps1 -SkipConda -SkipFont
 ```
 
@@ -145,15 +145,15 @@ auto-detected across anaconda3 / miniconda3 / miniforge3 / PATH).
 ## Prefer to configure it by hand?
 
 The **[manual setup guide](https://abdullah-masood-05.github.io/pwsh-terminal-setup/docs/manual-setup/)**
-walks through every step — installing PowerShell 7, **downloading and installing the Nerd Font**,
-adding the profile, and patching Windows Terminal — with copy-able commands. The profile
+walks through every step (installing PowerShell 7, **downloading and installing the Nerd Font**,
+adding the profile, and patching Windows Terminal) with copy-able commands. The profile
 ([`profile.ps1`](profile.ps1)) and the Windows Terminal fragments
 ([`windows-terminal/settings.partial.jsonc`](windows-terminal/settings.partial.jsonc)) are readable
 on their own.
 
 ## Uninstall / restore
 
-The installer never deletes — it backs up. To revert:
+The installer never deletes, it backs up. To revert:
 
 ```powershell
 Copy-Item "$($PROFILE.CurrentUserAllHosts).bak" $PROFILE.CurrentUserAllHosts -Force
