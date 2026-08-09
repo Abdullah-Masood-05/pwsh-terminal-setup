@@ -15,9 +15,10 @@ separately.
 
 ## 1. Download {#download}
 
-Grab the latest `pwsh-terminal-setup-x.y.z-Setup.exe` from the releases page.
+Grab the latest `pwsh-terminal-setup-x.y.z-Setup.exe`. The button downloads it directly; if the
+lookup is unavailable it falls back to the releases page.
 
-<a class="btn btn--primary" href="https://github.com/Abdullah-Masood-05/pwsh-terminal-setup/releases" target="_blank" rel="noopener">Download installer ↗</a>
+<DownloadButton />
 
 Make sure PowerShell 7 is installed first, see [Requirements](/docs/requirements). The installer
 checks and tells you if it's missing.

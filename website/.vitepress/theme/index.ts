@@ -4,6 +4,7 @@ import TerminalDemo from './components/TerminalDemo.vue'
 import DemoPrompt from './components/DemoPrompt.vue'
 import DemoLigatures from './components/DemoLigatures.vue'
 import DemoHistory from './components/DemoHistory.vue'
+import DownloadButton from './components/DownloadButton.vue'
 import Home from './components/Home.vue'
 import './style.css'
 
@@ -15,6 +16,7 @@ export default {
     app.component('DemoPrompt', DemoPrompt)
     app.component('DemoLigatures', DemoLigatures)
     app.component('DemoHistory', DemoHistory)
+    app.component('DownloadButton', DownloadButton)
     app.component('Home', Home)
   },
 } satisfies Theme
