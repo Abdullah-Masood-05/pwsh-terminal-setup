@@ -21,7 +21,7 @@ it. The command below is the quickest route; you can also
 directly.
 
 ```powershell
-winget install --id Microsoft.PowerShell -e
+winget install --id Microsoft.PowerShell --source winget --installer-type wix
 ```
 
 ::: warning Important
