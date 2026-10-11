@@ -14,6 +14,11 @@
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/github/license/Abdullah-Masood-05/pwsh-terminal-setup?color=1E4E79"></a>
   <a href="https://github.com/Abdullah-Masood-05/pwsh-terminal-setup/releases"><img alt="Latest release" src="https://img.shields.io/github/v/release/Abdullah-Masood-05/pwsh-terminal-setup?color=1E4E79&label=release"></a>
   <a href="https://abdullah-masood-05.github.io/pwsh-terminal-setup/"><img alt="Docs" src="https://img.shields.io/badge/Docs-website-B0731F"></a>
+  <a href="https://github.com/Abdullah-Masood-05/pwsh-terminal-setup/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/Abdullah-Masood-05/pwsh-terminal-setup?style=social&logo=github"></a>
+</p>
+
+<p align="center">
+  ⭐ <b>Enjoying pwsh-terminal-setup?</b> If it's useful to you, please <a href="https://github.com/Abdullah-Masood-05/pwsh-terminal-setup">star it on GitHub</a>. It's free and it helps other developers find it.
 </p>
 
 <p align="center">
