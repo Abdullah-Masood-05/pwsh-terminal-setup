@@ -38,7 +38,7 @@ separately when you use it.
 ### Can I use JetBrains Mono?
 
 Yes. Pick it on the installer's font page, or run `.\install.ps1 -Font JetBrainsMono`. It has
-ligatures and Nerd Font icons just like LigaConsolas.
+ligatures and Nerd Font icons just like LigaConsolas, which stays the default and recommended choice.
 
 ### Can I use a different font?
 

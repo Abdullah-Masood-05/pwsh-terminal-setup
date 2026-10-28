@@ -29,7 +29,7 @@ missing, the installer offers to install it for you with winget before it contin
 
 Double-click the downloaded `.exe` and follow the prompts. One page asks which font you want:
 
-- **LigaConsolas Nerd Font**: a Consolas-style face (the default).
+- **LigaConsolas Nerd Font (recommended)**: a Consolas-style face, selected by default.
 - **JetBrains Mono Nerd Font**: JetBrains' developer font.
 
 Both have programming ligatures and Nerd Font icons. The installer then sets the telemetry

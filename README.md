@@ -73,7 +73,7 @@ installer with the font included.
 - **Fast startup**: conda is loaded on first use instead of on every launch, taking startup from
   ~2.3 s to ~0.3 s. PowerShell telemetry and the update-check banner are disabled.
 - **Ligatures + icons**: installs your pick of [LigaConsolas Nerd Font](https://github.com/Dosx001/ttf-ligaconsolas-nerd-font)
-  (Consolas-style, the default) or [JetBrains Mono Nerd Font](https://github.com/ryanoasis/nerd-fonts),
+  (Consolas-style, **default and recommended**) or [JetBrains Mono Nerd Font](https://github.com/ryanoasis/nerd-fonts),
   both with programming ligatures *and* Nerd Font glyphs, per-user, no admin.
 - **Minimal zsh-like prompt**: path, active conda env, and git branch. The branch is read straight
   from `.git/HEAD`, so rendering the prompt never spawns `git` (instant, even in big repos).

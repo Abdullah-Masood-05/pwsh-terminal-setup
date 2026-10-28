@@ -17,7 +17,7 @@ pwsh -ExecutionPolicy Bypass -File .\install.ps1
 
 ## Customize in one run {#customize}
 
-Use JetBrains Mono Nerd Font instead of the default LigaConsolas:
+LigaConsolas Nerd Font is the default and recommended font. To use JetBrains Mono Nerd Font instead:
 
 ```powershell
 .\install.ps1 -Font JetBrainsMono
@@ -40,7 +40,7 @@ Or install just the prompt and editing config, no conda block, no font:
 
 | Parameter | Type | What it changes |
 |---|---|---|
-| `-Font` | LigaConsolas&nbsp;/&nbsp;JetBrainsMono | Which Nerd Font to install and apply. Default `LigaConsolas`. |
+| `-Font` | LigaConsolas&nbsp;/&nbsp;JetBrainsMono | Which Nerd Font to install and apply. Default (and recommended) `LigaConsolas`. |
 | `-FontSize <n>` | number | Font size (points) on Windows Terminal `profiles.defaults`. |
 | `-ColorScheme <name>` | string | Color scheme on `profiles.defaults`. Must already exist in `settings.json`. |
 | `-Opacity <0-100>` | number | Background opacity. Below 100 also enables acrylic. |

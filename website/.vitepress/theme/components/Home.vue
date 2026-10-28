@@ -8,7 +8,7 @@ import RequirementAlert from './RequirementAlert.vue'
 
 const installs = [
   ['Telemetry opt-out', 'Turns off PowerShell telemetry and the startup update-check banner (User scope).'],
-  ['Your choice of Nerd Font', 'LigaConsolas or JetBrains Mono, both with ligatures and Nerd Font icons. Bundled in the installer.'],
+  ['Your choice of Nerd Font', 'LigaConsolas (recommended) or JetBrains Mono, both with ligatures and Nerd Font icons. Bundled in the installer.'],
   ['PowerShell profile', 'Installed to <code>$PROFILE.CurrentUserAllHosts</code>; merged idempotently, backed up first.'],
   ['Conda lazy-init', 'Loads conda on first use instead of every launch, for fast startup.'],
   ['Minimal git prompt', 'Path, conda env, and branch read straight from <code>.git/HEAD</code>, no <code>git.exe</code>.'],
@@ -45,7 +45,7 @@ const installs = [
       <div class="cards">
         <div class="card">
           <h3>Installer</h3>
-          <p>Everything in one run: pick LigaConsolas or JetBrains Mono, both bundled, so there are no extra downloads. Installs per-user, no admin needed. Needs <a :href="withBase('/docs/requirements')">PowerShell 7</a>.</p>
+          <p>Everything in one run: pick LigaConsolas (recommended) or JetBrains Mono, both bundled, so there are no extra downloads. Installs per-user, no admin needed. Needs <a :href="withBase('/docs/requirements')">PowerShell 7</a>.</p>
           <DownloadButton />
         </div>
         <div class="card">

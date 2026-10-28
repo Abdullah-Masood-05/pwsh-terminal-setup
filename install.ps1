@@ -26,7 +26,7 @@
     without hand-editing any file first.
 
 .PARAMETER Font
-    Which Nerd Font to install and apply: LigaConsolas (default, a
+    Which Nerd Font to install and apply: LigaConsolas (default and recommended, a
     Consolas-style face) or JetBrainsMono (JetBrains Mono Nerd Font). Both have
     programming ligatures and Nerd Font icons.
 
