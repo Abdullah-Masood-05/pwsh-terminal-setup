@@ -83,7 +83,8 @@ These live in Windows Terminal, not the profile. Set them with installer paramet
 ```
 
 ::: tip Note
-`-ColorScheme` must name a scheme already present in your `settings.json`. To use your own font,
+`-ColorScheme` must name a scheme already present in your `settings.json`. To switch to the
+bundled JetBrains Mono Nerd Font, pass `-Font JetBrainsMono`. To use any other installed font,
 pass `-FontFamily "Your Font Name"`.
 :::
 

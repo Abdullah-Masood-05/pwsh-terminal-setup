@@ -5,6 +5,8 @@ description: "Set it up by hand: install PowerShell 7, download and install the 
 
 # Manual setup
 
+<RequirementAlert compact />
+
 The same result as the installer, one step at a time. Every step is a copy-able command, and the
 inline demos follow the command that produced them so you can compare.
 
@@ -20,7 +22,7 @@ PowerShell 5.1. Install it with winget, or
 [download it from Microsoft ↗](https://learn.microsoft.com/powershell/scripting/install/installing-powershell-on-windows).
 
 ```powershell
-winget install --id Microsoft.PowerShell -e
+winget install --id Microsoft.PowerShell --source winget
 ```
 
 Reopen your terminal and confirm the version:
@@ -45,6 +47,24 @@ New-Item -ItemType Directory -Force -Path $dir | Out-Null
 }
 Start-Process $dir      # opens the folder so you can install the fonts
 ```
+
+::: details Prefer JetBrains Mono?
+The installer also offers **JetBrains Mono Nerd Font**, which has ligatures and Nerd Font icons
+too. Fetch its four styles instead:
+
+```powershell
+$dir  = "$env:USERPROFILE\Downloads\JetBrainsMono-NF"
+$base = "https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/JetBrainsMono/Ligatures"
+New-Item -ItemType Directory -Force -Path $dir | Out-Null
+"Regular","Bold","Italic","BoldItalic" | ForEach-Object {
+    Invoke-WebRequest "$base/JetBrainsMonoNerdFont-$_.ttf" -OutFile "$dir\JetBrainsMonoNerdFont-$_.ttf"
+}
+Start-Process $dir
+```
+
+Install them the same way, and use `"face": "JetBrainsMono Nerd Font"` in the Windows Terminal
+settings below.
+:::
 
 In the folder that opens, select all four `.ttf` files, right-click, and choose **Install** (or
 *Install for all users*). Then set the face in Windows Terminal, merge this into

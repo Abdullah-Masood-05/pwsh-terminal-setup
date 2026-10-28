@@ -8,9 +8,11 @@ description: Download, run, and verify the bundled installer. The Nerd Font is i
 The installer applies the whole setup in one run, per-user, no admin, and the font is already
 inside it.
 
+<RequirementAlert compact />
+
 ::: tip Note
-The installer bundles the required Nerd Font. You do not need to download or install any font
-separately.
+The installer bundles both Nerd Fonts it offers (LigaConsolas and JetBrains Mono). You do not
+need to download or install any font separately.
 :::
 
 ## 1. Download {#download}
@@ -20,13 +22,22 @@ lookup is unavailable it falls back to the releases page.
 
 <DownloadButton />
 
-Make sure PowerShell 7 is installed first, see [Requirements](/docs/requirements). The installer
-checks and tells you if it's missing.
+Make sure PowerShell 7 is installed first, see [Requirements](/docs/requirements). If it's
+missing, the installer offers to install it for you with winget before it continues.
 
 ## 2. Run it {#run}
 
-Double-click the downloaded `.exe` and follow the prompts. It sets the telemetry opt-out, installs
-the font, writes the profile, and patches Windows Terminal.
+Double-click the downloaded `.exe` and follow the prompts. One page asks which font you want:
+
+- **LigaConsolas Nerd Font**: a Consolas-style face (the default).
+- **JetBrains Mono Nerd Font**: JetBrains' developer font.
+
+Both have programming ligatures and Nerd Font icons. The installer then sets the telemetry
+opt-out, installs the font you picked, writes the profile, and patches Windows Terminal. To switch
+fonts later, run the installer again and pick the other one.
+
+If anything goes wrong, the installer tells you and points to the log at
+`%TEMP%\pwsh-terminal-setup-install.log`.
 
 ::: tip Note
 The installer is unsigned, so Windows SmartScreen may warn you on first launch. Click **More info →
@@ -50,6 +61,12 @@ Write-Host "Icons: `u{e0a0}  `u{f07b}   Ligatures: ==> -> != >= <=   Emoji: 🚀
 
 Then press <kbd>Ctrl</kbd> + <kbd>←</kbd> / <kbd>Ctrl</kbd> + <kbd>→</kbd> to jump word-by-word. If
 the icons show as boxes, the font isn't applied yet, see [Troubleshooting](/docs/troubleshooting).
+
+## Uninstall {#uninstall}
+
+Remove it from **Settings → Apps → Installed apps → pwsh-terminal-setup**. Uninstalling strips
+the setup's regions from your profile (anything else you added stays) and removes the font face it
+set in Windows Terminal. Installed fonts are left in place.
 
 ## Want to change the defaults? {#customize}
 

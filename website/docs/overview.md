@@ -34,7 +34,7 @@ separately when you use it.
 | Component | What it does |
 |---|---|
 | Telemetry opt-out | Sets `POWERSHELL_TELEMETRY_OPTOUT` and `POWERSHELL_UPDATECHECK` at User scope. |
-| Nerd Font | Installs LigaConsolas Nerd Font per-user (registered in HKCU): ligatures and icons. |
+| Nerd Font | Installs LigaConsolas or JetBrains Mono Nerd Font per-user (registered in HKCU): ligatures and icons. |
 | Profile | Writes `$PROFILE.CurrentUserAllHosts`: prompt, lazy conda, and PSReadLine config. |
 | Windows Terminal | Sets the font on `profiles.defaults` and frees `Ctrl+←/→` for word jumps. |
 
@@ -42,6 +42,8 @@ See [Commands & functions](/docs/commands) for everything the profile adds, and
 [Profile & theming](/docs/customization) to change the colors, prompt symbol, or fonts.
 
 ## Before you begin
+
+<RequirementAlert compact />
 
 You need PowerShell 7 and Windows Terminal on Windows 10 or 11. The
 [Requirements](/docs/requirements) page has the exact links and version checks, including where

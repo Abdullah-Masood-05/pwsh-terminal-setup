@@ -10,7 +10,7 @@
   "profiles": {
     "defaults": {
       "font": {
-        "face": "LigaConsolas Nerd Font",
+        "face": "LigaConsolas Nerd Font",   // or "JetBrainsMono Nerd Font" (installer -Font JetBrainsMono)
         "features": {
           "liga": 1,
           "calt": 1

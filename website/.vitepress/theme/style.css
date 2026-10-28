@@ -18,6 +18,9 @@
   --code-fg: #1e4e79;
   --hover: rgba(30, 78, 121, 0.05);
   --terminal: #0c0c0c;
+  --danger: #b42318;
+  --danger-tint: #fdecea;
+  --danger-line: #f1b5ae;
 
   --term-plain: #dde3ec;
   --term-cmd: #d9c767;
@@ -48,6 +51,9 @@
   --code-bg: rgba(127, 177, 230, 0.12);
   --code-fg: #9cc1ec;
   --hover: rgba(127, 177, 230, 0.08);
+  --danger: #ff8a80;
+  --danger-tint: #2e1414;
+  --danger-line: #6b2621;
 }
 
 /* =====================================================================
@@ -526,4 +532,50 @@ td .swatch + code { background: none; color: var(--ink-soft); }
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* =====================================================================
+   Requirement alert: the ONE red element on the site. Users missed the
+   PowerShell 7 requirement when it was muted hero text, so it gets a
+   deliberate exception to the single-accent rule.
+   ===================================================================== */
+.req-alert {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin: 0 0 24px;
+  padding: 14px 18px;
+  border: 1px solid var(--danger-line);
+  border-left: 4px solid var(--danger);
+  border-radius: var(--r-sm);
+  background: var(--danger-tint);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.55;
+}
+.req-alert__icon {
+  flex: none;
+  margin-top: 2px;
+  color: var(--danger);
+}
+.req-alert__body p {
+  margin: 0;
+}
+.req-alert__title {
+  font-weight: 700;
+  color: var(--danger);
+}
+.req-alert__text {
+  margin-top: 2px !important;
+}
+.req-alert__link {
+  display: inline-block;
+  margin-top: 8px;
+  font-weight: 600;
+  color: var(--danger) !important;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.req-alert--compact {
+  margin: 16px 0;
 }

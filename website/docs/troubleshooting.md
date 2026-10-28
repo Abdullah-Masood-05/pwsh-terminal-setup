@@ -40,7 +40,8 @@ Write-Host "`u{e0a0}  `u{f07b}"     # should be a branch and a folder icon
 
 ::: tip Note
 Still boxes? Open Windows Terminal settings and check that
-`profiles → defaults → font → face` is `LigaConsolas Nerd Font`. Re-run the installer, or set it
+`profiles → defaults → font → face` is `LigaConsolas Nerd Font` (or `JetBrainsMono Nerd Font` if you
+picked JetBrains Mono). Re-run the installer, or set it
 by hand from [step 4](/docs/manual-setup#terminal).
 :::
 
@@ -85,14 +86,27 @@ Cause: the installer is unsigned, so SmartScreen warns on first launch.
 Click **More info**, then **Run anyway**. If you'd rather not run the `.exe`, use the
 [manual setup](/docs/manual-setup) or run `install.ps1` from a clone instead.
 
-### `pwsh.exe not found on PATH` {#pwsh-missing}
+### `PowerShell 7 is required` / `PowerShell 7 was not found` {#pwsh-missing}
 
-Cause: PowerShell 7 isn't installed. The setup targets it, not Windows PowerShell 5.1.
+Cause: PowerShell 7 isn't installed. The setup targets it, not the Windows PowerShell 5.1 that
+ships with Windows.
 
 Install it, then reopen your terminal and re-run:
 
 ```powershell
-winget install --id Microsoft.PowerShell -e
+winget install --id Microsoft.PowerShell --source winget
+```
+
+See [Requirements](/docs/requirements) for how to tell the two apart.
+
+### `The setup script reported a problem` {#script-failed}
+
+Cause: one step of `install.ps1` failed while the installer ran it in the background.
+
+Every run writes a log. Open it to see which step failed and why:
+
+```powershell
+notepad "$env:TEMP\pwsh-terminal-setup-install.log"
 ```
 
 Something else? Check the [FAQ](/docs/faq) or open an issue on

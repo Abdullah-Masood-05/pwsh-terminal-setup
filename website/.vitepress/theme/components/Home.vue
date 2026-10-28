@@ -4,13 +4,11 @@ import DemoPrompt from './DemoPrompt.vue'
 import DemoLigatures from './DemoLigatures.vue'
 import DemoHistory from './DemoHistory.vue'
 import DownloadButton from './DownloadButton.vue'
-
-const powershell =
-  'https://learn.microsoft.com/powershell/scripting/install/installing-powershell-on-windows'
+import RequirementAlert from './RequirementAlert.vue'
 
 const installs = [
   ['Telemetry opt-out', 'Turns off PowerShell telemetry and the startup update-check banner (User scope).'],
-  ['LigaConsolas Nerd Font', 'Programming ligatures and Nerd Font icons. Bundled in the installer.'],
+  ['Your choice of Nerd Font', 'LigaConsolas or JetBrains Mono, both with ligatures and Nerd Font icons. Bundled in the installer.'],
   ['PowerShell profile', 'Installed to <code>$PROFILE.CurrentUserAllHosts</code>; merged idempotently, backed up first.'],
   ['Conda lazy-init', 'Loads conda on first use instead of every launch, for fast startup.'],
   ['Minimal git prompt', 'Path, conda env, and branch read straight from <code>.git/HEAD</code>, no <code>git.exe</code>.'],
@@ -31,14 +29,11 @@ const installs = [
             past commands as you type, and ligatures with Nerd Font icons, all from one installer
             with the font already inside it.
           </p>
+          <RequirementAlert />
           <div class="hero__cta">
             <DownloadButton />
             <a class="btn btn--secondary" :href="withBase('/docs/manual-setup/')">Set up manually →</a>
           </div>
-          <p class="hero__req">
-            Requires PowerShell 7:
-            <a :href="powershell" target="_blank" rel="noopener">get it from Microsoft <span class="ext" aria-hidden="true">↗</span></a>
-          </p>
         </div>
         <div class="hero__demo"><DemoPrompt /></div>
       </div>
@@ -50,7 +45,7 @@ const installs = [
       <div class="cards">
         <div class="card">
           <h3>Installer</h3>
-          <p>Everything in one run: the Nerd Font is included, so there are no extra downloads. Installs per-user, no admin needed.</p>
+          <p>Everything in one run: pick LigaConsolas or JetBrains Mono, both bundled, so there are no extra downloads. Installs per-user, no admin needed. Needs <a :href="withBase('/docs/requirements')">PowerShell 7</a>.</p>
           <DownloadButton />
         </div>
         <div class="card">

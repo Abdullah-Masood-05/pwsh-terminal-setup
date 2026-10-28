@@ -17,8 +17,9 @@ changes.
 
 ### Does it work with Windows PowerShell 5.1?
 
-It targets PowerShell 7 (`pwsh`). PowerShell 7 installs side-by-side with the built-in 5.1 and
-doesn't replace it. Install 7 first, see [Requirements](/docs/requirements).
+No. It requires PowerShell 7 (`pwsh`). PowerShell 7 installs side-by-side with the built-in 5.1
+and doesn't replace it. Install 7 first, see [Requirements](/docs/requirements). If you run the
+script from 5.1 anyway, it hands off to `pwsh` when it's installed, or stops with instructions.
 
 ### Can I install without an internet connection?
 
@@ -30,8 +31,14 @@ the four `.ttf` files on another machine and pass `-FontDir`, see
 
 ### Is the font really bundled in the installer?
 
-Yes. The installer includes all four LigaConsolas Nerd Font styles and installs them for you, you
-do not need to download or install any font separately when you use it.
+Yes. The installer includes all four styles of both LigaConsolas Nerd Font and JetBrains Mono
+Nerd Font, and installs the one you pick. You do not need to download or install any font
+separately when you use it.
+
+### Can I use JetBrains Mono?
+
+Yes. Pick it on the installer's font page, or run `.\install.ps1 -Font JetBrainsMono`. It has
+ligatures and Nerd Font icons just like LigaConsolas.
 
 ### Can I use a different font?
 
@@ -65,7 +72,11 @@ them, and backs up each file it touches first.
 
 ### How do I uninstall or revert?
 
-Nothing is deleted, so restoring the backups reverts everything:
+Uninstall it from **Settings → Apps**, or run `.\install.ps1 -Uninstall`. That strips the setup's
+regions from your profile (your own lines stay) and removes its font face from Windows Terminal.
+
+For a full revert, restore the backups. The `.bak` is written on the first install and kept on
+re-runs, so it is always your original:
 
 ```powershell
 Copy-Item "$($PROFILE.CurrentUserAllHosts).bak" $PROFILE.CurrentUserAllHosts -Force

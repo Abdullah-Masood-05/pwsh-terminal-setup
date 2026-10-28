@@ -6,6 +6,7 @@ import DemoLigatures from './components/DemoLigatures.vue'
 import DemoHistory from './components/DemoHistory.vue'
 import DownloadButton from './components/DownloadButton.vue'
 import Home from './components/Home.vue'
+import RequirementAlert from './components/RequirementAlert.vue'
 import './style.css'
 
 export default {
@@ -18,5 +19,6 @@ export default {
     app.component('DemoHistory', DemoHistory)
     app.component('DownloadButton', DownloadButton)
     app.component('Home', Home)
+    app.component('RequirementAlert', RequirementAlert)
   },
 } satisfies Theme
